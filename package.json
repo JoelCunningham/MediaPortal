@@ -1,8 +1,8 @@
 {
-  "name": "my-new-app",
-  "productName": "my-new-app",
+  "name": "media-portal",
+  "productName": "media-portal",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -29,6 +29,7 @@
     "@electron-forge/plugin-fuses": "^7.8.0",
     "@electron-forge/plugin-webpack": "^7.8.0",
     "@electron/fuses": "^1.8.0",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
@@ -47,6 +48,9 @@
     "typescript": "~4.5.4"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.2",
+    "better-sqlite3": "^11.9.1",
+    "drizzle-orm": "^0.41.0",
     "electron-squirrel-startup": "^1.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

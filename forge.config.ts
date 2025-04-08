@@ -28,6 +28,9 @@ const config: ForgeConfig = {
             html: './src/index.html',
             js: './src/app.tsx',
             name: 'main_window',
+            preload: {
+              js: './src/preload.ts',
+            },
           },
         ],
       },
