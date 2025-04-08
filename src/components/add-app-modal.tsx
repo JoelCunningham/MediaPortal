@@ -9,6 +9,8 @@ const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
 
     const handleClose = () => {
         setNewApp(new App());
+        setPreviousLocation('');
+        setIconSrc('');
         onClose();
     };
 
@@ -67,7 +69,6 @@ const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
                     }
 
                     <TextInput value={newApp.name} onChange={(e) => setNewApp({ ...newApp, name: e.target.value })} placeholder="Nickname" />
-
 
                     <SubmitButton onClick={handleAddApp} />
                 </form>
