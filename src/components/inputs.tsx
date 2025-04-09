@@ -1,5 +1,5 @@
+import Icon from '@components/icon';
 import React from 'react';
-import Icon from './icon';
 
 type changeEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
@@ -78,3 +78,4 @@ export {
     SubmitButton,
     TextInput
 };
+

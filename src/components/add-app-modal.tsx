@@ -1,7 +1,7 @@
+import { CloseButton, FileInput, RadioInput, SubmitButton, TextInput } from '@components/inputs';
+import App from '@objects/app';
+import { getIcon, guessName } from '@services/app-service';
 import React, { useEffect } from 'react';
-import { getIcon, guessName } from '../services/app-service';
-import App from '../types/app';
-import { CloseButton, FileInput, RadioInput, SubmitButton, TextInput } from './inputs';
 
 const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
     const [newApp, setNewApp] = React.useState(new App());

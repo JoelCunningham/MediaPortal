@@ -1,5 +1,6 @@
 class App {
     id: number;
+    instanceId: number;
     name: string = '';
     location: string = '';
     isWeb: boolean = false;
