@@ -49,7 +49,7 @@ ipcMain.handle('open-file-dialog', async () => {
 ipcMain.handle('get-icon', (_event, exePath: string) => {
   try {
     const iconBuffer = extractIcon(exePath, 256);
-    return `data:image/png;base64,${iconBuffer.toString('base64')}`;
+    return `data:image/x-icon;base64,${iconBuffer.toString('base64')}`;
   } catch (err) {
     console.error('Failed to extract icon:', err);
     return null;

@@ -25,7 +25,7 @@ const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
 
     const handleAddApp = () => {
         window.Electron.ipcRenderer.invoke('add-app', newApp).then((app: App) => {
-            console.log(app);
+            handleClose();
         }).catch((error: Error) => {
             console.error('Error adding app:', error);
         });

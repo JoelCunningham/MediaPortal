@@ -3,10 +3,12 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import AddAppModal from './components/add-app-modal';
 import { AddButton } from './components/inputs';
+import AppBox from './components/app-box';
+import App from './types/app';
 
-const App = () => {
-    const [apps, setApps] = useState<{ id: string; name: string; location: string }[]>([]);
-    const [isOpen, setIsOpen] = useState(true);
+const Main = () => {
+    const [apps, setApps] = useState<App[]>([]);
+    const [isModalOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const fetchApps = async () => {
@@ -18,21 +20,20 @@ const App = () => {
 
     return (
         <div className='bg-background h-screen w-screen'>
-            <h1 className="text-2xl text-primary">Hello react</h1>
-            {apps.map((app) => (
-                <div key={app.id}>
-                    <h3>{app.name}</h3>
-                    <p>{app.location}</p>
-                </div>
-            ))}
+            <h1 className="text-2xl text-white">Apps</h1>
+            <div className='text-white flex'>
+                {apps.map((app) => (
+                    <AppBox key={app.id} app={app} />
+                ))}
+            </div>
             <div className="absolute bottom-4 w-full flex justify-center">
                 <AddButton onClick={() => setIsOpen(true)} />
             </div>
-            <AddAppModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            <AddAppModal isOpen={isModalOpen} onClose={() => setIsOpen(false)} />
         </div>
     );
 };
 
 createRoot(document.body).render(
-    <App />,
+    <Main />,
 );
