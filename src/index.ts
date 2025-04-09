@@ -48,10 +48,34 @@ ipcMain.handle('open-file-dialog', async () => {
 
 ipcMain.handle('get-icon', (_event, exePath: string) => {
   try {
-    const iconBuffer = extractIcon(exePath, 256); 
+    const iconBuffer = extractIcon(exePath, 256);
     return `data:image/png;base64,${iconBuffer.toString('base64')}`;
   } catch (err) {
     console.error('Failed to extract icon:', err);
     return null;
+  }
+});
+
+ipcMain.handle('get-web-icon', async (_event, urlPath: string) => {
+  const faviconService = 'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={url}&size=256'
+
+  try {
+    if (!/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/|$)/.test(urlPath)) {
+      return '';
+    }
+    if (!/^https?:\/\//i.test(urlPath)) {
+      urlPath = `https://${urlPath}`;
+    }
+
+    const response = await fetch(faviconService.replace('{url}', urlPath));
+    if (!response.ok) throw new Error(`Failed to fetch icon: ${response.status} ${response.statusText}`);
+
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    return `data:image/x-icon;base64,${buffer.toString('base64')}`;
+  } catch (err) {
+    console.error('Error fetching web icon:', err);
+    return '';
   }
 });

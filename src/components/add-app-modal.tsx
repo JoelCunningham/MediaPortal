@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import App, { guessName, getIcon } from '../types/app';
+import { getIcon, guessName } from '../services/app-service';
+import App from '../types/app';
 import { CloseButton, FileInput, RadioInput, SubmitButton, TextInput } from './inputs';
 
 const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
@@ -16,7 +17,7 @@ const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
 
     const handleFindExecutable = () => {
         window.Electron.ipcRenderer.invoke('open-file-dialog').then((filePath: string) => {
-            setNewApp({ ...newApp, location: filePath, name: guessName(filePath) });
+            setNewApp({ ...newApp, location: filePath });
         }).catch((error: Error) => {
             console.error('Error opening file dialog:', error);
         });
@@ -33,17 +34,27 @@ const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
     useEffect(() => {
         const currentLocation = newApp.location;
         setNewApp({ ...newApp, location: previousLocation });
+        setIconSrc('');
         setPreviousLocation(currentLocation);
     }, [newApp.isWeb]);
 
     useEffect(() => {
-        if (newApp.location && !newApp.isWeb) {
-            getIcon(newApp.location).then((icon: string) => {
-                setIconSrc(icon);
+        let isCancelled = false;
+        setNewApp({ ...newApp, name: guessName(newApp.location, newApp.isWeb) });
+        if (newApp.location) {
+            getIcon(newApp.location, newApp.isWeb).then((icon: string) => {
+                if (!isCancelled) {
+                    setIconSrc(icon);
+                } 
             }).catch((error: Error) => {
-                console.error('Error getting icon:', error);
+                if (!isCancelled) {
+                    console.error('Error getting icon:', error);
+                }
             });
         }
+        return () => {
+            isCancelled = true;
+        };
     }, [newApp.location]);
 
     return (
