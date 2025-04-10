@@ -34,25 +34,28 @@ const Main = () => {
     }, [currentApp]);
 
     return (
-        <div className='h-screen w-screen bg-background'>
-            <div className='w-screen absolute flex justify-center'>
-                <Navbar />
-            </div>
-            <div className='h-screen flex items-center justify-center text-white '>
-                {apps.map((app) => (
-                    <AppBox key={app.id} app={app} />
-                ))}
-                {/* <webview
+        <div className='h-screen w-screen bg-background grid grid-rows-[1fr_auto]'>
+
+            <div className="w-full flex flex-col items-center justify-center text-white">
+                <div className="w-full flex justify-center gap-4 ">
+                    {apps.map((app) => (
+                        <AppBox key={app.id} app={app} />
+                    ))}
+                    {/* <webview
                     id='webview'
                     ref={webviewRef}
                     useragent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
                     src={completeUrl(currentApp.location)}
                     style={{ width: '100%', height: '100%' }}
-                /> */}
+                    /> */}
+                </div>
+                <div className="mt-4">
+                    <AddButton onClick={() => setIsOpen(true)} />
+                </div>
             </div>
-            <div className='w-screen absolute flex bottom-4 justify-center'>
-                <AddButton onClick={() => setIsOpen(true)} />
-            </div>
+
+            <Navbar />
+
             <AddAppModal isOpen={isModalOpen} onClose={() => setIsOpen(false)} />
         </div>
     );
@@ -60,6 +63,6 @@ const Main = () => {
 
 createRoot(document.body).render(
     <NavigationProvider>
-        <Main />,
+        <Main />
     </NavigationProvider>
 );
