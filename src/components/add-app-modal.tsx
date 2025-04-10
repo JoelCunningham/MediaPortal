@@ -51,27 +51,27 @@ const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
 
     return (
         <div className={`${isOpen ? 'visible' : 'invisible'} flex fixed top-0 w-full h-full justify-center items-center`}>
-            <div className="bg-foreground text-white p-6 rounded-lg w-100 ">
-                <div className="flex justify-between items-center mb-4 text-3xl">
+            <div className='bg-foreground text-white p-6 rounded-lg w-100 '>
+                <div className='flex justify-between items-center mb-4 text-3xl'>
                     <div className='flex gap-4 items-center'>
-                        <h2 className="font-bold">Add App</h2>
+                        <h2 className='font-bold'>Add App</h2>
                         {iconSrc && <img src={iconSrc} className='w-8 h-8' />}
                     </div>
                     <CloseButton onClick={handleClose} />
                 </div>
-                <form className="flex flex-col gap-4">
+                <form className='flex flex-col gap-4'>
 
-                    <div className="flex gap-6">
-                        <RadioInput checked={!newApp.isWeb} onChange={(e) => setNewApp({ ...newApp, isWeb: !e.target.checked })} label="Desktop app" />
-                        <RadioInput checked={newApp.isWeb} onChange={(e) => setNewApp({ ...newApp, isWeb: e.target.checked })} label="Web app" />
+                    <div className='flex gap-6'>
+                        <RadioInput checked={!newApp.isWeb} onChange={(e) => setNewApp({ ...newApp, isWeb: !e.target.checked })} label='Desktop app' />
+                        <RadioInput checked={newApp.isWeb} onChange={(e) => setNewApp({ ...newApp, isWeb: e.target.checked })} label='Web app' />
                     </div>
 
                     {newApp.isWeb ?
-                        <TextInput value={newApp.location} onChange={(e) => setNewApp({ ...newApp, location: e.target.value })} placeholder="URL" /> :
-                        <FileInput value={newApp.location} onChange={(e) => setNewApp({ ...newApp, location: e.target.value })} onClick={handleFindExecutable} placeholder="Executable" />
+                        <TextInput value={newApp.location} onChange={(e) => setNewApp({ ...newApp, location: e.target.value })} placeholder='URL' /> :
+                        <FileInput value={newApp.location} onChange={(e) => setNewApp({ ...newApp, location: e.target.value })} onClick={handleFindExecutable} placeholder='Executable' />
                     }
 
-                    <TextInput value={newApp.name} onChange={(e) => setNewApp({ ...newApp, name: e.target.value })} placeholder="Nickname" />
+                    <TextInput value={newApp.name} onChange={(e) => setNewApp({ ...newApp, name: e.target.value })} placeholder='Nickname' />
 
                     <SubmitButton onClick={handleAddApp} />
                 </form>

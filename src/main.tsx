@@ -34,23 +34,23 @@ const Main = () => {
     }, [currentApp]);
 
     return (
-        <div className='h-full w-full bg-background '>
-            <div className="w-full absolute flex justify-center">
+        <div className='h-screen w-screen bg-background'>
+            <div className='w-screen absolute flex justify-center'>
                 <Navbar />
             </div>
-            <div className='text-white h-full flex items-center justify-center'>
+            <div className='h-screen flex items-center justify-center text-white '>
                 {apps.map((app) => (
                     <AppBox key={app.id} app={app} />
                 ))}
                 {/* <webview
-                    id="webview"
+                    id='webview'
                     ref={webviewRef}
-                    useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+                    useragent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
                     src={completeUrl(currentApp.location)}
                     style={{ width: '100%', height: '100%' }}
                 /> */}
             </div>
-            <div className="absolute bottom-4 w-full flex justify-center">
+            <div className='w-screen absolute flex bottom-4 justify-center'>
                 <AddButton onClick={() => setIsOpen(true)} />
             </div>
             <AddAppModal isOpen={isModalOpen} onClose={() => setIsOpen(false)} />

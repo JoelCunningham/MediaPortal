@@ -1,4 +1,4 @@
-import App from "@objects/app";
+import App from '@objects/app';
 
 const iconCache: { [key: string]: string } = {};
 
@@ -18,7 +18,7 @@ const getIcon = async (location: string, isWeb: boolean): Promise<string> => {
 const guessName = (location: string, isWeb: boolean) => {
     const name = isWeb
         ? ''
-        : location.split("\\").pop().replace(/\.[^/.]+$/, '') || ''
+        : location.split('\\').pop().replace(/\.[^/.]+$/, '') || ''
 
     return name;
 }
