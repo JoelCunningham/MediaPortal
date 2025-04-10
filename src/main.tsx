@@ -2,13 +2,14 @@ import AddAppModal from '@components/add-app-modal';
 import AppBox from '@components/app-box';
 import { AddButton } from '@components/inputs';
 import Navbar from '@components/navbar';
-import { AppsProvider } from '@contexts/apps-context';
+import { NavigationProvider } from '@contexts/navigation-context';
 import App from '@objects/app';
 import { completeUrl } from '@services/url-service';
 
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
+import { loadIcons } from '@services/app-service';
 
 const Main = () => {
     const [apps, setApps] = useState<App[]>([]);
@@ -19,9 +20,9 @@ const Main = () => {
 
     useEffect(() => {
         const fetchApps = async () => {
-            const appsData = await window.Electron.ipcRenderer.invoke('get-apps');
-            setApps(appsData);
-            setCurrentApp(appsData[1]);
+            const response = await window.Electron.ipcRenderer.invoke('get-apps');
+            const prepared = await loadIcons(response);
+            setApps(prepared);
         };
         fetchApps();
     }, []);
@@ -33,9 +34,8 @@ const Main = () => {
     }, [currentApp]);
 
     return (
-        <div className='bg-background h-screen w-screen'>
-            <div className="absolute top-4 w-full flex justify-center">
-                <h1 className="text-2xl text-white">Apps</h1>
+        <div className='h-full w-full bg-background '>
+            <div className="w-full absolute flex justify-center">
                 <Navbar />
             </div>
             <div className='text-white h-full flex items-center justify-center'>
@@ -59,7 +59,7 @@ const Main = () => {
 };
 
 createRoot(document.body).render(
-    <AppsProvider>
+    <NavigationProvider>
         <Main />,
-    </AppsProvider>
+    </NavigationProvider>
 );

@@ -43,18 +43,10 @@ const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
         setNewApp({ ...newApp, name: guessName(newApp.location, newApp.isWeb) });
         if (newApp.location) {
             getIcon(newApp.location, newApp.isWeb).then((icon: string) => {
-                if (!isCancelled) {
-                    setIconSrc(icon);
-                } 
-            }).catch((error: Error) => {
-                if (!isCancelled) {
-                    console.error('Error getting icon:', error);
-                }
-            });
+                if (!isCancelled) setIconSrc(icon);
+            })
         }
-        return () => {
-            isCancelled = true;
-        };
+        return () => { isCancelled = true; };
     }, [newApp.location]);
 
     return (

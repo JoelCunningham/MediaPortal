@@ -1,12 +1,10 @@
 import React from 'react';
 import 'material-symbols'
 
-const Icon = ({ icon, size, className, onClick }: IconInterface) => (
+const Icon = ({ icon, size, className }: IconInterface) => (
     <span
         className={`material-symbols-outlined ${className}`}
-        style={{ fontSize: size }}
-        onClick={onClick}
-    >
+        style={{ fontSize: size }}    >
         {icon}
     </span>
 );
@@ -17,5 +15,4 @@ interface IconInterface {
     icon: string;
     size?: number;
     className?: string;
-    onClick?: () => void;
 }

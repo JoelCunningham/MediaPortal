@@ -1,25 +1,19 @@
 import App from "@objects/app";
 import { getIcon } from "@services/app-service";
 import React, { useEffect, useState } from "react";
-import { useAppsContext } from "@contexts/apps-context";
+import { useNavigationContext } from "@contexts/navigation-context";
 
 const AppBox = ({ app }: AppBoxProps) => {
     const [iconUrl, setIconUrl] = useState<string | null>(null);
-    const { addApp } = useAppsContext();
+    const { addApp } = useNavigationContext();
 
     useEffect(() => {
-        getIcon(app.location, app.isWeb)
-            .then((icon) => {
-                setIconUrl(icon);
-            })
-            .catch((error) => {
-                console.error("Error fetching icon:", error);
-            });
+        getIcon(app.location, app.isWeb).then((icon) => { setIconUrl(icon); })
     }, [app.location, app.isWeb]);
 
     const handleClick = () => {
         if (app.isWeb) {
-          addApp(app);
+            addApp(app);
         } else {
             window.Electron.ipcRenderer.invoke("launch-app", app).catch((error) => {
                 console.error("Error opening URL:", error);

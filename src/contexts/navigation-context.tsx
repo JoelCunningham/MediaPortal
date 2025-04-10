@@ -1,15 +1,15 @@
 import App from '@objects/app';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
-interface AppsContextType {
+interface NavigationContextProps {
     openApps: App[];
     addApp: (app: App) => void;
     removeApp: (instanceId: number) => void;
 }
 
-const AppsContext = createContext<AppsContextType | undefined>(undefined);
+const NavigationContext = createContext<NavigationContextProps | undefined>(undefined);
 
-export const AppsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [nextId, setNextId] = useState<number>(0);
     const [openApps, setOpenApps] = useState<App[]>([]);
 
@@ -23,16 +23,16 @@ export const AppsProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     return (
-        <AppsContext.Provider value={{ openApps, addApp, removeApp }}>
+        <NavigationContext.Provider value={{ openApps, addApp, removeApp }}>
             {children}
-        </AppsContext.Provider>
+        </NavigationContext.Provider>
     );
 };
 
-export const useAppsContext = (): AppsContextType => {
-    const context = useContext(AppsContext);
+export const useNavigationContext = (): NavigationContextProps => {
+    const context = useContext(NavigationContext);
     if (!context) {
-        throw new Error('useAppsContext must be used within an AppsProvider');
+        throw new Error('useNavigationContext must be used within an NavigationProvider');
     }
     return context;
 };
