@@ -7,7 +7,7 @@ const Navbar = () => {
 
     return (
         <nav className='w-full'>
-            <ul className='flex gap-4'>
+            <ul className='flex'>
                 <NavbarItem icon='home' onClick={() => console.log('Home clicked')} onClose={() => console.log('Home closed')} />
                 {openApps.map((app) => (
                     <NavbarItem
@@ -28,9 +28,12 @@ const NavbarItem = ({ icon, onClick, onClose, isApp }: NavbarItemProps) => {
     const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
     const handleShow = () => {
-        timeoutRef.current = setTimeout(() => {
-            setIsCloseShown(true);
-        }, 500);
+        if (!timeoutRef.current) {
+            timeoutRef.current = setTimeout(() => {
+                setIsCloseShown(true);
+                timeoutRef.current = null;
+            }, 700);
+        }
     }
 
     const handleHide = () => {
@@ -48,33 +51,37 @@ const NavbarItem = ({ icon, onClick, onClose, isApp }: NavbarItemProps) => {
         }
     }
 
+    const handleClick = () => {
+        (document.activeElement as HTMLElement)?.blur()
+    }
+
     return (
         <li
-            className='group text-white items-center justify-between rounded-md'
+            className='group text-white items-center justify-between rounded-md mt-auto'
             onMouseEnter={isApp && handleShow}
             onFocus={isApp && handleShow}
             onMouseLeave={isApp && handleHide}
             onBlur={isApp && handleHideOnBlur}
+            onClick={handleClick}
         >
+
+            <button
+                onClick={onClose}
+                className={`w-16 ml-4 mb-1 bg-secondary flex justify-center rounded-lg clickable focusable transitioning ${isCloseShown ? 'visible' : 'invisible'}`}
+            >
+                <Icon icon='close' size={30} />
+            </button>
+
             <button
                 onClick={onClick}
-                className='h-16 w-16 bg-background hover:bg-foreground rounded-lg clickable focusable'
+                className='w-16 h-16 ml-4 mb-4 bg-foreground/30 hover:bg-foreground/50 rounded-lg clickable focusable'
             >
                 {isApp
                     ? <img src={icon} alt='App Icon' className='w-12 h-12 m-auto' />
-                    : <Icon icon={icon} size={64} />
+                    : <Icon icon={icon} size={64} weight={500} className='text-primary'  />
                 }
             </button>
-            {isCloseShown && (
-                <div className='pt-1'>
-                    <button
-                        className={`bg-secondary w-full flex justify-center rounded-lg clickable focusable transitioning`}
-                        onClick={onClose}
-                    >
-                        <Icon icon='close' size={30} />
-                    </button>
-                </div>
-            )}
+
         </li>
     );
 }
