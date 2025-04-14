@@ -15,7 +15,7 @@ const Main = () => (
                 <Route element={<Navbar />}>
                     <Route path='/' element={<Home />} />
                     <Route path='/app' element={<App />} />
-                    <Route path="*" element={<Navigate to="/" />} />
+                    <Route path='*' element={<Navigate to='/' />} />
                 </Route>
             </Routes>
         </NavigationProvider>

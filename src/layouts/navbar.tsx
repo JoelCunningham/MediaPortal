@@ -7,8 +7,8 @@ const Navbar = () => {
     const { openApps, removeApp, setCurrentApp } = useNavigationContext();
 
     return (
-        <div className="h-screen w-screen flex flex-col">
-            <div className="flex-1 overflow-hidden">
+        <div className='h-screen w-screen flex flex-col'>
+            <div className='flex-1 overflow-hidden'>
                 <Outlet />
             </div>
             <nav className='w-full'>

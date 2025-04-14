@@ -1,6 +1,6 @@
-import { useNavigationContext } from "@contexts/navigation-context";
-import { completeUrl } from "@services/url-service";
-import React, { useEffect, useRef } from "react";
+import { useNavigationContext } from '@contexts/navigation-context';
+import { completeUrl } from '@services/url-service';
+import React, { useEffect, useRef } from 'react';
 
 const App = () => {
     const { currentApp } = useNavigationContext();
@@ -17,7 +17,7 @@ const App = () => {
 
     return (
         <div className='h-screen w-screen bg-background'>
-            <div className="w-full h-full flex justify-center items-center">
+            <div className='w-full h-full flex justify-center items-center'>
                 <webview
                     id='webview'
                     ref={webviewRef}
