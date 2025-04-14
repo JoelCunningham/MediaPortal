@@ -19,6 +19,7 @@
       "@services/*": ["src/services/*"],
       "@objects/*": ["src/objects/*"],
       "@database/*": ["src/database/*"],
+      "@pages/*": ["src/pages/*"],
     }
   },
   "include": ["src/**/*"]

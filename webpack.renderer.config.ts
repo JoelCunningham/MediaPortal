@@ -25,6 +25,7 @@ export const rendererConfig: Configuration = {
       '@services': path.resolve(__dirname, 'src/services'),
       '@objects': path.resolve(__dirname, 'src/objects'),
       '@database': path.resolve(__dirname, 'src/database'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
     }
   },
 };
