@@ -1,15 +1,15 @@
 import { CloseButton, FileInput, RadioInput, SubmitButton, TextInput } from '@components/inputs';
-import App from '@objects/app';
+import AppData from '@objects/app-data';
 import { getIcon, guessName } from '@services/app-service';
 import React, { useEffect } from 'react';
 
 const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
-    const [newApp, setNewApp] = React.useState(new App());
+    const [newApp, setNewApp] = React.useState(new AppData());
     const [previousLocation, setPreviousLocation] = React.useState<string>('');
     const [iconSrc, setIconSrc] = React.useState<string>('');
 
     const handleClose = () => {
-        setNewApp(new App());
+        setNewApp(new AppData());
         setPreviousLocation('');
         setIconSrc('');
         onClose();
@@ -24,7 +24,7 @@ const AddAppModal = ({ isOpen, onClose }: AddAppModalInterface) => {
     }
 
     const handleAddApp = () => {
-        window.Electron.ipcRenderer.invoke('add-app', newApp).then((app: App) => {
+        window.Electron.ipcRenderer.invoke('add-app', newApp).then((app: AppData) => {
             handleClose();
         }).catch((error: Error) => {
             console.error('Error adding app:', error);

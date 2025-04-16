@@ -1,11 +1,11 @@
-import App from '@objects/app';
+import AppData from '@objects/app-data';
 import { getIcon } from '@services/app-service';
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '@contexts/navigation-context';
+import { useNavigationContext } from '@contexts/navigation';
 
 const AppBox = ({ app }: AppBoxProps) => {
     const [iconUrl, setIconUrl] = useState<string | null>(null);
-    const { addApp } = useNavigationContext();
+    const { addAndSetCurrentApp } = useNavigationContext();
 
     useEffect(() => {
         getIcon(app.location, app.isWeb).then((icon) => { setIconUrl(icon); })
@@ -13,7 +13,7 @@ const AppBox = ({ app }: AppBoxProps) => {
 
     const handleClick = () => {
         if (app.isWeb) {
-            addApp(app);
+            addAndSetCurrentApp(app);
         } else {
             window.Electron.ipcRenderer.invoke('launch-app', app).catch((error) => {
                 console.error('Error opening URL:', error);
@@ -36,5 +36,5 @@ export default AppBox;
 
 
 interface AppBoxProps {
-    app: App;
+    app: AppData;
 }

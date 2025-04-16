@@ -1,5 +1,5 @@
 import Icon from '@components/icon';
-import { useNavigationContext } from '@contexts/navigation-context';
+import { useNavigationContext } from '@contexts/navigation';
 import React, { useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 

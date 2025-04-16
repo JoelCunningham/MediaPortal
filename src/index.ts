@@ -1,5 +1,5 @@
 import '@database/db';
-import App from '@objects/app';
+import AppData from '@objects/app-data';
 import { completeUrl, isValidUrl } from '@services/url-service';
 
 import { execFile } from 'child_process';
@@ -18,7 +18,8 @@ if (require('electron-squirrel-startup')) {
 let mainWindow: BrowserWindow | null = null;
 
 const createWindow = (): void => {
-  // Create the browser window.
+  const isDev = process.env.NODE_ENV === 'development';
+
   mainWindow = new BrowserWindow({
     fullscreen: true,
     webPreferences: {
@@ -29,13 +30,9 @@ const createWindow = (): void => {
     },
   });
 
-  // Load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  // Open the DevTools.
-  if (process.env.NODE_ENV === 'development') {
-    mainWindow.webContents.openDevTools();
-  }
+  if (isDev) mainWindow.webContents.openDevTools();
 };
 
 app.on('ready', createWindow);
@@ -85,7 +82,7 @@ ipcMain.handle('get-web-icon', async (_event, urlPath: string) => {
   }
 });
 
-ipcMain.handle('launch-app', async (_event, app: App) => {
+ipcMain.handle('launch-app', async (_event, app: AppData) => {
   try {
     execFile(app.location, (error: Error) => {
       if (error) throw new Error(error.message);
@@ -95,7 +92,7 @@ ipcMain.handle('launch-app', async (_event, app: App) => {
   }
 });
 
-ipcMain.handle('launch-web-app', async (_event, app: App) => {
+ipcMain.handle('launch-web-app', async (_event, app: AppData) => {
   try {
     const win = new BrowserWindow({
       fullscreen: true,

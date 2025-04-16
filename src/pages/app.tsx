@@ -1,4 +1,4 @@
-import { useNavigationContext } from '@contexts/navigation-context';
+import { useNavigationContext } from '@contexts/navigation';
 import { completeUrl } from '@services/url-service';
 import React, { useEffect, useRef } from 'react';
 
@@ -31,9 +31,3 @@ const App = () => {
 }
 
 export default App;
-
-interface AppProps {
-    id: number;
-    location: string;
-    isActive: boolean;
-}

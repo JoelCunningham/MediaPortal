@@ -1,4 +1,4 @@
-import App from '@objects/app';
+import AppData from '@objects/app-data';
 
 const iconCache: { [key: string]: string } = {};
 
@@ -23,7 +23,7 @@ const guessName = (location: string, isWeb: boolean) => {
     return name;
 }
 
-const loadIcons = async (apps: App[]) => {
+const loadIcons = async (apps: AppData[]) => {
     return await Promise.all(
         apps.map(async (app) => {
             const icon = await getIcon(app.location, app.isWeb);

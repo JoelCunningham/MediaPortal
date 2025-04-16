@@ -1,12 +1,12 @@
 import AddAppModal from '@components/add-app-modal';
 import AppBox from '@components/app-box';
 import { AddButton } from '@components/inputs';
-import App from '@objects/app';
+import AppData from '@objects/app-data';
 import { loadIcons } from '@services/app-service';
 import React, { useEffect, useState } from 'react';
 
 const Home = () => {
-    const [apps, setApps] = useState<App[]>([]);
+    const [apps, setApps] = useState<AppData[]>([]);
     const [isModalOpen, setIsOpen] = useState(false);
 
     useEffect(() => {

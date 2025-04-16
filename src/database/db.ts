@@ -1,4 +1,4 @@
-import App from '@objects/app';
+import AppData from '@objects/app-data';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { ipcMain } from 'electron';
@@ -11,6 +11,6 @@ ipcMain.handle('get-apps', async () => {
     return db.select().from(schema.apps).all();
 });
 
-ipcMain.handle('add-app', async (event, app: App) => {
+ipcMain.handle('add-app', async (event, app: AppData) => {
     return db.insert(schema.apps).values(app).run();
 });
