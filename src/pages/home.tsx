@@ -19,10 +19,10 @@ const Home = () => {
     }, []);
 
     return (
-        <div className='h-screen w-screen grid grid-rows-[1fr_auto]'>
+        <div className='h-full'>
 
-            <div className='w-full flex flex-col items-center justify-center text-white'>
-                <div className='w-full flex justify-center gap-4 '>
+            <div className='h-full flex flex-col items-center justify-center text-white'>
+                <div className='flex justify-center gap-4 '>
                     {apps.map((app) => (
                         <AppBox key={app.id} app={app} />
                     ))}

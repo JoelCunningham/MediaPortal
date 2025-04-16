@@ -1,18 +1,21 @@
 import Icon from '@components/icon';
 import { useNavigationContext } from '@contexts/navigation';
+import AppContainer from '@layouts/app-container';
 import React, { useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 const Navbar = () => {
-    const { openApps, removeApp, setCurrentApp } = useNavigationContext();
+    const { openApps, removeApp, currentApp, setCurrentApp } = useNavigationContext();
+    const noActiveApp = !currentApp;
 
     return (
         <div className='h-screen w-screen flex flex-col'>
-            <div className='flex-1 overflow-hidden'>
-                <Outlet />
+            <div className='h-full relative'>
+                {noActiveApp && <Outlet />}
+                <AppContainer />
             </div>
             <nav className='w-full'>
-                <ul className='flex'>
+                <ul className='flex items-center'>
                     <NavbarItem icon='home' onClick={() => setCurrentApp(null)} />
                     {openApps.map((app) => (
                         <NavbarItem

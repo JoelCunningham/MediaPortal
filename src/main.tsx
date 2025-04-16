@@ -1,7 +1,6 @@
 import { NavigationProvider } from '@contexts/navigation';
 import Navbar from '@layouts/navbar';
-import { APP_DIR, HOME_DIR } from '@objects/constants';
-import App from '@pages/app';
+import { HOME_DIR } from '@objects/constants';
 import Home from '@pages/home';
 
 import React from 'react';
@@ -15,7 +14,6 @@ const Main = () => (
             <Routes>
                 <Route element={<Navbar />}>
                     <Route path={HOME_DIR} element={<Home />} />
-                    <Route path={APP_DIR} element={<App />} />
                     <Route path='*' element={<Navigate to='/' />} />
                 </Route>
             </Routes>

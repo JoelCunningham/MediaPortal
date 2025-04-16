@@ -1,23 +1,20 @@
 import { useNavigationContext } from '@contexts/navigation';
 import { completeUrl } from '@services/url-service';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 const AppContainer = () => {
     const { openApps, currentApp } = useNavigationContext();
-    const location = useLocation();
+    const isAppActive = !!currentApp;
 
     return (
-        <div className="absolute inset-0 pointer-events-none">
+        <div className={`h-full ${!isAppActive && 'hidden'}`}>
             {openApps.map((app) => {
-                const isVisible = location.pathname === '/app' && currentApp?.instanceId === app.instanceId;
-                const isOnHome = location.pathname === '/home';
+                const isShown = currentApp?.instanceId === app.instanceId;
 
                 return (
                     <div
                         key={app.instanceId}
-                        className={`absolute inset-0 transition-opacity duration-300 ${isVisible || isOnHome ? 'opacity-100' : 'opacity-0'} ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'}`}
-                        style={{ zIndex: isVisible ? 10 : 0 }}
+                        className={`h-full ${!isShown && 'hidden'}`}
                     >
                         <webview
                             src={completeUrl(app.location)}

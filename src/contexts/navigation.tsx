@@ -1,7 +1,5 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AppData from '@objects/app-data';
-import { APP_DIR, HOME_DIR } from '@objects/constants';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 interface NavigationContextProps {
     openApps: AppData[];
@@ -18,15 +16,6 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
     const [nextId, setNextId] = useState(0);
     const [openApps, setOpenApps] = useState<AppData[]>([]);
     const [activeApp, setActiveApp] = useState<AppData | null>(null);
-    const navigate = useNavigate();
-
-    const navigateTo = (app: AppData | null) => {
-        if (app) {
-            navigate(APP_DIR, { state: { app } });
-        } else {
-            navigate(HOME_DIR);
-        }
-    };
 
     const addApp = (app: AppData): AppData => {
         const newApp = { ...app, instanceId: nextId };
@@ -39,7 +28,6 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         setOpenApps((prev) => prev.filter((app) => app.instanceId !== instanceId));
         if (activeApp?.instanceId === instanceId) {
             setActiveApp(null);
-            navigateTo(null);
         }
     };
 
@@ -47,9 +35,6 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         const isOpen = app ? openApps.some(a => a.instanceId === app.instanceId) : false;
         if (!validate || isOpen || app === null) {
             setActiveApp(app);
-            navigateTo(app);
-        } else {
-            navigateTo(null);
         }
     };
 
