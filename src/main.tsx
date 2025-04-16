@@ -1,4 +1,6 @@
 import { NavigationProvider } from '@contexts/navigation';
+import Navbar from '@layouts/navbar';
+import { APP_DIR, HOME_DIR } from '@objects/constants';
 import App from '@pages/app';
 import Home from '@pages/home';
 
@@ -6,8 +8,6 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './index.css';
-import Navbar from './layouts/navbar';
-import { APP_DIR, HOME_DIR } from '@objects/constants';
 
 const Main = () => (
     <Router>

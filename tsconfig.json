@@ -16,10 +16,11 @@
       "*": ["node_modules/*"],
       "@components/*": ["src/components/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@services/*": ["src/services/*"],
-      "@objects/*": ["src/objects/*"],
       "@database/*": ["src/database/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@objects/*": ["src/objects/*"],
       "@pages/*": ["src/pages/*"],
+      "@services/*": ["src/services/*"],
     }
   },
   "include": ["src/**/*"]
