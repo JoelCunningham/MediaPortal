@@ -22,10 +22,11 @@ export const rendererConfig: Configuration = {
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
       '@contexts': path.resolve(__dirname, 'src/contexts'),
-      '@database': path.resolve(__dirname, 'src/database'),
       '@layouts': path.resolve(__dirname, 'src/layouts'),
+      '@models': path.resolve(__dirname, 'src/models'),
       '@objects': path.resolve(__dirname, 'src/objects'),
       '@pages': path.resolve(__dirname, 'src/pages'),
+      '@repositories': path.resolve(__dirname, 'src/repositories'),
       '@services': path.resolve(__dirname, 'src/services'),
     }
   },

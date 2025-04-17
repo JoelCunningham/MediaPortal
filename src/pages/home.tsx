@@ -1,38 +1,28 @@
-import AddAppModal from '@components/add-app-modal';
-import AppBox from '@components/app-box';
+import AddModal from '@components/add-modal';
 import { AddButton } from '@components/inputs';
-import AppData from '@objects/app-data';
-import { loadIcons } from '@services/app-service';
-import React, { useEffect, useState } from 'react';
+import ShortcutBox from '@components/shortcut-box';
+import { useShortcutContext } from '@contexts/shortcut';
+import React, { useState } from 'react';
 
 const Home = () => {
-    const [apps, setApps] = useState<AppData[]>([]);
-    const [isModalOpen, setIsOpen] = useState(false);
-
-    useEffect(() => {
-        const fetchApps = async () => {
-            const response = await window.Electron.ipcRenderer.invoke('get-apps');
-            const prepared = await loadIcons(response);
-            setApps(prepared);
-        };
-        fetchApps();
-    }, []);
+    const { shortcuts } = useShortcutContext();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <div className='h-full'>
 
             <div className='h-full flex flex-col items-center justify-center text-white'>
                 <div className='flex justify-center gap-4 '>
-                    {apps.map((app) => (
-                        <AppBox key={app.id} app={app} />
+                    {shortcuts.map((shortcut) => (
+                        <ShortcutBox key={shortcut.id} shortcut={shortcut} />
                     ))}
                 </div>
                 <div className='mt-4'>
-                    <AddButton onClick={() => setIsOpen(true)} />
+                    <AddButton onClick={() => setIsModalOpen(true)} />
                 </div>
             </div>
 
-            <AddAppModal isOpen={isModalOpen} onClose={() => setIsOpen(false)} />
+            <AddModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 }

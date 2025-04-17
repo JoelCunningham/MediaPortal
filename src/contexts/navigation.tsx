@@ -1,50 +1,51 @@
-import AppData from '@objects/app-data';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
+import Shortcut from '../models/shortcut-model';
 
 interface NavigationContextProps {
-    openApps: AppData[];
-    currentApp: AppData | null;
-    addApp: (app: AppData) => AppData;
-    removeApp: (instanceId: number) => void;
-    setCurrentApp: (app: AppData | null, skipValidation?: boolean) => void;
-    addAndSetCurrentApp: (app: AppData) => void;
+    currShortcut: Shortcut | null;
+    openShortcuts: Shortcut[];
+    addShortcut: (shortcut: Shortcut) => Shortcut;
+    removeShortcut: (instance: string) => void;
+    setCurrentShortcut: (shortcut: Shortcut | null, validate?: boolean) => void;
+    addAndSetCurrentShortcut: (shortcut: Shortcut) => void;
 }
 
 const NavigationContext = createContext<NavigationContextProps | undefined>(undefined);
 
 export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [nextId, setNextId] = useState(0);
-    const [openApps, setOpenApps] = useState<AppData[]>([]);
-    const [activeApp, setActiveApp] = useState<AppData | null>(null);
+    const [currShortcut, setCurrShortcut] = useState<Shortcut | null>(null);
+    const [prevShortcuts, setPrevShortcuts] = useState<Shortcut[]>([null]);
+    const [openShortcuts, setOpenShortcuts] = useState<Shortcut[]>([]);
 
-    const addApp = (app: AppData): AppData => {
-        const newApp = { ...app, instanceId: nextId };
-        setOpenApps((prev) => [...prev, newApp]);
-        setNextId((id) => id + 1);
-        return newApp;
+    const addShortcut = (shortcut: Shortcut): Shortcut => {
+        const newShortcut = shortcut.createInstance();
+        setOpenShortcuts((prev) => [...prev, newShortcut]);
+        return newShortcut;
     };
 
-    const removeApp = (instanceId: number) => {
-        setOpenApps((prev) => prev.filter((app) => app.instanceId !== instanceId));
-        if (activeApp?.instanceId === instanceId) {
-            setActiveApp(null);
+    const removeShortcut = (instance: string) => {
+        setOpenShortcuts((prev) => prev.filter((shortcut) => shortcut.instance !== instance));
+        setPrevShortcuts((prev) => prev.filter((shortcut) => shortcut.instance !== instance));
+        if (currShortcut?.instance === instance) {
+            setCurrShortcut(prevShortcuts[prevShortcuts.length - 1]);
         }
     };
 
-    const setCurrentApp = (app: AppData | null, validate = true) => {
-        const isOpen = app ? openApps.some(a => a.instanceId === app.instanceId) : false;
-        if (!validate || isOpen || app === null) {
-            setActiveApp(app);
+    const setCurrentShortcut = (shortcut: Shortcut | null, validate = true) => {
+        const isOpen = shortcut ? openShortcuts.some(s => s.instance === shortcut.instance) : false;
+        if (!validate || isOpen || shortcut === null) {
+            setPrevShortcuts((prev) => [...prev, currShortcut]);
+            setCurrShortcut(shortcut);
         }
     };
 
-    const addAndSetCurrentApp = (app: AppData) => {
-        const newApp = addApp(app);
-        setCurrentApp(newApp, false);
+    const addAndSetCurrentShortcut = (shortcut: Shortcut) => {
+        const newShortcut = addShortcut(shortcut);
+        setCurrentShortcut(newShortcut, false);
     };
 
     return (
-        <NavigationContext.Provider value={{ openApps, currentApp: activeApp, addApp, removeApp, setCurrentApp, addAndSetCurrentApp }}>
+        <NavigationContext.Provider value={{ openShortcuts, currShortcut, addShortcut, removeShortcut, setCurrentShortcut, addAndSetCurrentShortcut }}>
             {children}
         </NavigationContext.Provider>
     );

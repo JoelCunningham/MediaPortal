@@ -1,29 +1,29 @@
 import Icon from '@components/icon';
 import { useNavigationContext } from '@contexts/navigation';
-import AppContainer from '@layouts/app-container';
+import ShortcutContainer from '@layouts/shortcut-container';
 import React, { useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 const Navbar = () => {
-    const { openApps, removeApp, currentApp, setCurrentApp } = useNavigationContext();
-    const noActiveApp = !currentApp;
+    const { openShortcuts, removeShortcut, currShortcut, setCurrentShortcut } = useNavigationContext();
+    const noActiveShortcut = !currShortcut;
 
     return (
         <div className='h-screen w-screen flex flex-col'>
             <div className='h-full relative'>
-                {noActiveApp && <Outlet />}
-                <AppContainer />
+                {noActiveShortcut && <Outlet />}
+                <ShortcutContainer />
             </div>
             <nav className='w-full'>
                 <ul className='flex items-center'>
-                    <NavbarItem icon='home' onClick={() => setCurrentApp(null)} />
-                    {openApps.map((app) => (
+                    <NavbarItem icon='home' onClick={() => setCurrentShortcut(null)} />
+                    {openShortcuts.map((shortcut) => (
                         <NavbarItem
-                            key={app.instanceId}
-                            icon={app.icon}
-                            isApp
-                            onClick={() => setCurrentApp(app)}
-                            onClose={() => removeApp(app.instanceId)}
+                            key={shortcut.instance}
+                            icon={shortcut.icon}
+                            isShortcut
+                            onClick={() => setCurrentShortcut(shortcut)}
+                            onClose={() => removeShortcut(shortcut.instance)}
                         />
                     ))}
                 </ul>
@@ -32,7 +32,7 @@ const Navbar = () => {
     );
 };
 
-const NavbarItem = ({ icon, onClick, onClose, isApp }: NavbarItemProps) => {
+const NavbarItem = ({ icon, onClick, onClose, isShortcut }: NavbarItemProps) => {
     const [isCloseShown, setIsCloseShown] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -67,10 +67,10 @@ const NavbarItem = ({ icon, onClick, onClose, isApp }: NavbarItemProps) => {
     return (
         <li
             className='group text-white items-center justify-between rounded-md mt-auto'
-            onMouseEnter={isApp && handleShow}
-            onFocus={isApp && handleShow}
-            onMouseLeave={isApp && handleHide}
-            onBlur={isApp && handleHideOnBlur}
+            onMouseEnter={isShortcut && handleShow}
+            onFocus={isShortcut && handleShow}
+            onMouseLeave={isShortcut && handleHide}
+            onBlur={isShortcut && handleHideOnBlur}
             onClick={handleClick}
         >
 
@@ -85,8 +85,8 @@ const NavbarItem = ({ icon, onClick, onClose, isApp }: NavbarItemProps) => {
                 onClick={onClick}
                 className='w-16 h-16 ml-4 mb-4 bg-foreground/30 hover:bg-foreground/50 rounded-lg clickable focusable'
             >
-                {isApp
-                    ? <img src={icon} alt='App Icon' className='w-12 h-12 m-auto' />
+                {isShortcut
+                    ? <img src={icon} alt='Shortcut Icon' className='w-12 h-12 m-auto' />
                     : <Icon icon={icon} size={64} weight={500} className='text-primary' />
                 }
             </button>
@@ -101,5 +101,5 @@ interface NavbarItemProps {
     icon: string;
     onClick: () => void;
     onClose?: () => void;
-    isApp?: boolean;
+    isShortcut?: boolean;
 }

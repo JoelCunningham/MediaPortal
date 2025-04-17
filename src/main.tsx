@@ -7,17 +7,20 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './index.css';
+import { ShortcutProvider } from '@contexts/shortcut';
 
 const Main = () => (
     <Router>
-        <NavigationProvider>
-            <Routes>
-                <Route element={<Navbar />}>
-                    <Route path={HOME_DIR} element={<Home />} />
-                    <Route path='*' element={<Navigate to='/' />} />
-                </Route>
-            </Routes>
-        </NavigationProvider>
+        <ShortcutProvider>
+            <NavigationProvider>
+                <Routes>
+                    <Route element={<Navbar />}>
+                        <Route path={HOME_DIR} element={<Home />} />
+                        <Route path='*' element={<Navigate to='/' />} />
+                    </Route>
+                </Routes>
+            </NavigationProvider>
+        </ShortcutProvider>
     </Router>
 );
 

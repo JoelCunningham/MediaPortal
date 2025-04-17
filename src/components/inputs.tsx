@@ -3,12 +3,12 @@ import React from 'react';
 
 type changeEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
-const RadioInput = ({ checked, onChange, label }: { checked: boolean; onChange: changeEvent; label: string }) => (
+const RadioInput = ({ checked, onCheck, label }: { checked: boolean; onCheck: changeEvent; label: string }) => (
     <label className='text-lg clickable'>
         <input
             type='radio'
             checked={checked}
-            onChange={onChange}
+            onChange={onCheck}
             className={`radio-input clickable focusable`}
         />
         {label}
