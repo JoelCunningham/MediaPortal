@@ -1,20 +1,18 @@
+import Request from '@api/request';
 import { CloseButton, FileInput, RadioInput, SubmitButton, TextInput } from '@components/inputs';
-import { ShortcutType } from '@objects/enums';
-import { getIcon, guessName } from '@services/shortcut-service';
-import React, { useEffect } from 'react';
-import Shortcut from '../models/shortcut-model';
 import { useShortcutContext } from '@contexts/shortcut';
+import Shortcut from '@models/shortcut-model';
+import { IconRoute, ShortcutType } from '@objects/enums';
+import React, { useEffect } from 'react';
 
 const AddModal = ({ isOpen, onClose }: AddModalProps) => {
     const [newShortcut, setNewShortcut] = React.useState(Shortcut.createBlank());
     const [previousLocation, setPreviousLocation] = React.useState<string>('');
-    const [iconSrc, setIconSrc] = React.useState<string>('');
     const { addShortcut } = useShortcutContext();
 
     const handleClose = () => {
         setNewShortcut(Shortcut.createBlank());
         setPreviousLocation('');
-        setIconSrc('');
         onClose();
     };
 
@@ -27,8 +25,6 @@ const AddModal = ({ isOpen, onClose }: AddModalProps) => {
     }
 
     const handleAddShortcut = () => {
-        console.log(    );
-        newShortcut.initialise()
         addShortcut(newShortcut);
         handleClose();
     };
@@ -36,18 +32,22 @@ const AddModal = ({ isOpen, onClose }: AddModalProps) => {
     useEffect(() => {
         const currentLocation = newShortcut.location;
         setNewShortcut(newShortcut.update({ location: previousLocation }));
-        setIconSrc('');
         setPreviousLocation(currentLocation);
     }, [newShortcut.type]);
 
     useEffect(() => {
         let isCancelled = false;
-        setNewShortcut(newShortcut.update({ name: guessName(newShortcut.location, newShortcut.type) }));
-        if (newShortcut.location) {
-            getIcon(newShortcut.location, newShortcut.type).then((icon: string) => {
-                if (!isCancelled) setIconSrc(icon);
-            })
-        }
+        const fetchIcon = async () => {
+            newShortcut.guessName();
+            setNewShortcut(newShortcut.createInstance());
+            if (newShortcut.location) {
+                const icon = await Request.send(IconRoute.GET, newShortcut.location, newShortcut.type);
+                if (!isCancelled) {
+                    setNewShortcut(newShortcut.update({ icon }));
+                }
+            }
+        };
+        fetchIcon();
         return () => { isCancelled = true; };
     }, [newShortcut.location]);
 
@@ -57,7 +57,7 @@ const AddModal = ({ isOpen, onClose }: AddModalProps) => {
                 <div className='flex justify-between items-center mb-4 text-3xl'>
                     <div className='flex gap-4 items-center'>
                         <h2 className='font-bold'>Add Shortcut</h2>
-                        {iconSrc && <img src={iconSrc} className='w-8 h-8' />}
+                        {newShortcut.icon && <img src={newShortcut.icon} className='w-8 h-8' />}
                     </div>
                     <CloseButton onClick={handleClose} />
                 </div>

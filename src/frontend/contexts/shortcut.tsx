@@ -1,4 +1,6 @@
+import Request from '@api/request';
 import ShortcutModel from '@models/shortcut-model';
+import { ShortcutRoute } from '@objects/enums';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface ShortcutContextProps {
@@ -13,15 +15,16 @@ export const ShortcutProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [shortcuts, setShortcuts] = useState<ShortcutModel[]>([]);
 
     const addShortcut = async (shortcut: ShortcutModel) => {
-        await window.Electron.ipcRenderer.invoke('add-shortcut', shortcut);
+        await Request.send(ShortcutRoute.ADD, shortcut);
         setShortcuts((prev) => [...prev, shortcut]);
     };
 
     useEffect(() => {
         const fetchShortcuts = async () => {
-            const shortcuts = await window.Electron.ipcRenderer.invoke('get-shortcuts');
+            const response = await Request.send(ShortcutRoute.GET) as ShortcutModel[];
+            const shortcuts = response.map(ShortcutModel.createFrom);
             for (const shortcut of shortcuts) {
-                shortcut.initialise();
+                await shortcut.initialise();
             }
             setShortcuts(shortcuts);
         };

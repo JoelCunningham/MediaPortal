@@ -1,5 +1,5 @@
 import { useNavigationContext } from '@contexts/navigation';
-import { completeUrl } from '@services/url-service';
+import { completeUrl } from '@utilities/url-utilities';
 import React from 'react';
 
 const ShortcutContainer = () => {

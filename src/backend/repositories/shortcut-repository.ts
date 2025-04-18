@@ -4,21 +4,18 @@ import AbstractRepository from '@repositories/abstract-repository';
 class ShortcutRepository extends AbstractRepository<ShortcutModel> {
 
     constructor() {
-        super('shortcut.json', ShortcutModel);
+        super('shortcut.json');
     }
 
     public getShortcuts(): ShortcutModel[] {
-        let shortcuts = super.readDataFromCache();
-        if (!shortcuts) {
-            const fileData = super.readDataFromFile();
-            shortcuts = fileData ? fileData.map(ShortcutModel.createFrom) : [];
-            this.setCache(shortcuts);
-        }
-        return shortcuts;
+        return this.readData();
     }
 
     public addShortcuts(shortcuts: ShortcutModel[]): void {
-        shortcuts = shortcuts.map(ShortcutModel.createFrom);
+        shortcuts.map(shortcut => {
+            shortcut.icon = '';
+            shortcut.instance = '';
+        });
         this.appendData(shortcuts);
     }
 

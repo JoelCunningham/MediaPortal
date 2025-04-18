@@ -1,5 +1,5 @@
-import React from 'react';
 import 'material-symbols/rounded.css';
+import React from 'react';
 
 const Icon = ({ icon, size, className, filled, weight, grade, optical }: IconInterface) => (
     <span

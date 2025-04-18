@@ -12,14 +12,17 @@ export const mainConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
     alias: {
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@contexts': path.resolve(__dirname, 'src/contexts'),
-      '@layouts': path.resolve(__dirname, 'src/layouts'),
-      '@models': path.resolve(__dirname, 'src/models'),
-      '@objects': path.resolve(__dirname, 'src/objects'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
-      '@repositories': path.resolve(__dirname, 'src/repositories'),
-      '@services': path.resolve(__dirname, 'src/services'),
+      '@api': path.resolve(__dirname, 'src/backend/api'),
+      '@repositories': path.resolve(__dirname, 'src/backend/repositories'),
+      '@routes': path.resolve(__dirname, 'src/backend/routes'),
+      '@services': path.resolve(__dirname, 'src/backend/services'),
+      '@models': path.resolve(__dirname, 'src/common/models'),
+      '@objects': path.resolve(__dirname, 'src/common/objects'),
+      '@utilities': path.resolve(__dirname, 'src/common/utilities'),
+      '@components': path.resolve(__dirname, 'src/frontend/components'),
+      '@contexts': path.resolve(__dirname, 'src/frontend/contexts'),
+      '@layouts': path.resolve(__dirname, 'src/frontend/layouts'),
+      '@pages': path.resolve(__dirname, 'src/frontend/pages'),
     }
   },
 };

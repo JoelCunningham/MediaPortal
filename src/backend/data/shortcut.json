@@ -1,0 +1,38 @@
+[
+  {
+    "id": "54456904-5e39-4c5b-a570-7b81b29c3d90",
+    "createdAt": "2025-04-18T12:21:49.159Z",
+    "updatedAt": "2025-04-18T12:21:49.159Z",
+    "name": "Netflix",
+    "location": "netflix.com",
+    "type": "web",
+    "position": 0
+  },
+  {
+    "id": "ac0feecf-2d34-43d7-9a08-150d6d36be85",
+    "createdAt": "2025-04-18T16:17:38.836Z",
+    "updatedAt": "2025-04-18T16:17:38.836Z",
+    "name": "WhatsApp",
+    "location": "web.whatsapp.com",
+    "type": "web",
+    "position": 0
+  },
+  {
+    "id": "8f3c905d-7218-46f4-9aad-d0600dabe636",
+    "createdAt": "2025-04-18T16:32:57.719Z",
+    "updatedAt": "2025-04-18T16:32:57.719Z",
+    "name": "Discord",
+    "location": "discord.com/app",
+    "type": "web",
+    "position": 0
+  },
+  {
+    "id": "478f6b41-66af-4c8e-96ce-0a0871b47551",
+    "createdAt": "2025-04-18T16:35:42.662Z",
+    "updatedAt": "2025-04-18T16:35:42.662Z",
+    "name": "ChatGPT",
+    "location": "chatgpt.com",
+    "type": "web",
+    "position": 0
+  }
+]

@@ -1,5 +1,5 @@
+import Shortcut from '@models/shortcut-model';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
-import Shortcut from '../models/shortcut-model';
 
 interface NavigationContextProps {
     currShortcut: Shortcut | null;

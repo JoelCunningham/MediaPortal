@@ -1,7 +1,7 @@
 import { useNavigationContext } from '@contexts/navigation';
+import Shortcut from '@models/shortcut-model';
 import { ShortcutType } from '@objects/enums';
 import React from 'react';
-import Shortcut from '../models/shortcut-model';
 
 const ShortcutBox = ({ shortcut }: ShortcutBoxProps) => {
     const { addAndSetCurrentShortcut } = useNavigationContext();

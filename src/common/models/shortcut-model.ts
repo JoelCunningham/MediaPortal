@@ -1,7 +1,7 @@
-import { ShortcutType } from "@objects/enums";
-import { getIcon } from "@services/shortcut-service";
+import AbstractModel from "@models/abstract-model";
+import { IconRoute, ShortcutType } from "@objects/enums";
 import { v4 as UUID } from 'uuid';
-import AbstractModel from "./abstract-model";
+import Request from "@api/request";
 
 class ShortcutModel extends AbstractModel {
     public name: string;
@@ -38,6 +38,13 @@ class ShortcutModel extends AbstractModel {
         return instance;
     }
 
+    public guessName(): void {
+        if (this.type === ShortcutType.APP) {
+            this.name = this.location.split('\\').pop().replace(/\.[^/.]+$/, '') || '';
+        }
+        this.name = '';
+    }
+
     public update({
         name = this.name,
         location = this.location,
@@ -53,7 +60,7 @@ class ShortcutModel extends AbstractModel {
     }
 
     public async initialise(): Promise<void> {
-        this.icon = await getIcon(this.location, this.type);
+        this.icon = await Request.send(IconRoute.GET, this.location, this.type);
     }
 
 }
