@@ -1,5 +1,5 @@
 import ShortcutModel from '@models/shortcut-model';
-import { AbstractRepository } from '@repositories/abstract-repository';
+import AbstractRepository from '@repositories/abstract-repository';
 
 class ShortcutRepository extends AbstractRepository<ShortcutModel> {
 

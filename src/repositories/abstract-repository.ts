@@ -1,11 +1,12 @@
 import AbstractModel from '@models/abstract-model';
 import Cache from '@objects/cache';
+import { DATA_DIR } from '@objects/constants';
 import fs from 'fs';
 import path from 'path';
 
 type Constructor<T extends AbstractModel> = new (...args: any[]) => T;
 
-export abstract class AbstractRepository<T extends AbstractModel> {
+abstract class AbstractRepository<T extends AbstractModel> {
     private readonly ENCODING: BufferEncoding = 'utf-8';
     private readonly JSON_SPACE: number = 2;
 
@@ -15,7 +16,7 @@ export abstract class AbstractRepository<T extends AbstractModel> {
     constructor(filename: string, type: Constructor<T>) {
         this.type = type;
 
-        this.filePath = path.join(__dirname, filename);
+        this.filePath = path.join(DATA_DIR, filename);
         if (!fs.existsSync(this.filePath)) {
             fs.writeFileSync(this.filePath, '', this.ENCODING);
         }
@@ -54,3 +55,5 @@ export abstract class AbstractRepository<T extends AbstractModel> {
     }
 
 }
+
+export default AbstractRepository;
