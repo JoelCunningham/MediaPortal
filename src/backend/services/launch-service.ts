@@ -11,9 +11,7 @@ class LaunchService {
             execFile(shortcut.location, (error: Error) => {
                 if (error) throw new Error(error.message);
             });
-        } catch (err) {
-            console.error('Error launching app:', err);
-        }
+        } catch (error) { }
     }
 
     public static launchWeb(shortcut: Shortcut): void {
@@ -26,9 +24,7 @@ class LaunchService {
                 }
             });
             win.loadURL(completeUrl(shortcut.location));
-        } catch (err) {
-            console.error('Error launching web app:', err);
-        }
+        } catch (error) { }
     }
 }
 

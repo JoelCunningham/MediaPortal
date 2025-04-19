@@ -1,7 +1,7 @@
 import { CloseButton, FileInput, RadioInput, SubmitButton, TextInput } from '@components/inputs';
 import { useShortcutContext } from '@contexts/shortcut';
 import Shortcut from '@models/shortcut-model';
-import { ShortcutType } from '@objects/enums';
+import { FileRoute, ShortcutType } from '@objects/enums';
 import React, { useEffect } from 'react';
 
 const AddModal = ({ isOpen, onClose }: AddModalProps) => {
@@ -16,10 +16,8 @@ const AddModal = ({ isOpen, onClose }: AddModalProps) => {
     };
 
     const handleFindExecutable = () => {
-        window.Electron.ipcRenderer.invoke('open-file-dialog').then((filePath: string) => {
+        window.Electron.ipcRenderer.invoke(FileRoute.OPEN_DIALOG).then((filePath: string) => {
             setNewShortcut(newShortcut.update({ location: filePath }));
-        }).catch((error: Error) => {
-            console.error('Error opening file dialog:', error);
         });
     }
 

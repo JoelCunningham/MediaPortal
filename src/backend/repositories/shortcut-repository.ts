@@ -2,9 +2,10 @@ import ShortcutModel from '@models/shortcut-model';
 import AbstractRepository from '@repositories/abstract-repository';
 
 class ShortcutRepository extends AbstractRepository<ShortcutModel> {
+    private static readonly REPOSITORY_FILE = 'shortcut.json';
 
     constructor() {
-        super('shortcut.json');
+        super(ShortcutRepository.REPOSITORY_FILE);
     }
 
     public getShortcuts(): ShortcutModel[] {
@@ -13,7 +14,6 @@ class ShortcutRepository extends AbstractRepository<ShortcutModel> {
 
     public addShortcuts(shortcuts: ShortcutModel[]): void {
         shortcuts.map(shortcut => {
-            shortcut.icon = '';
             shortcut.instance = '';
         });
         this.appendData(shortcuts);

@@ -1,36 +1,39 @@
+import { ICON_ENCODING, ICON_PATH, ICON_SIZE } from '@objects/constants';
+import { completeUrl, isValidUrl } from '@utilities/url-utilities';
 import extractIcon from 'extract-file-icon';
-import { isValidUrl, completeUrl } from '@utilities/url-utilities';
 
 class IconService {
+    private static readonly FAVICON_SERVICE: string = 'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={url}&size={size}';
 
     public static getAppIcon(exePath: string): string | null {
         try {
-            const iconBuffer = extractIcon(exePath, 256);
-            return `data:image/x-icon;base64,${iconBuffer.toString('base64')}`;
-        } catch (err) {
-            console.error('Failed to extract icon:', err);
+            const iconBuffer = extractIcon(exePath, ICON_SIZE);
+            return this.getIconString(iconBuffer);
+        } catch (error) {
             return null;
         }
     };
 
     public static async getWebIcon(urlPath: string): Promise<string | null> {
-        const faviconService = 'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={url}&size=256'
         try {
             if (!isValidUrl(urlPath)) {
                 return null;
             }
             urlPath = completeUrl(urlPath);
-            const response = await fetch(faviconService.replace('{url}', urlPath));
-            if (!response.ok) throw new Error(`Failed to fetch icon: ${response.status} ${response.statusText}`);
+            const response = await fetch(this.FAVICON_SERVICE.replace('{url}', urlPath).replace('{size}', ICON_SIZE.toString()));
+            if (!response.ok) return null;
 
             const arrayBuffer = await response.arrayBuffer();
-            const buffer = Buffer.from(arrayBuffer);
+            const iconBuffer = Buffer.from(arrayBuffer);
 
-            return `data:image/x-icon;base64,${buffer.toString('base64')}`;
-        } catch (err) {
-            console.error('Error fetching web icon:', err);
+            return this.getIconString(iconBuffer);
+        } catch (error) {
             return null;
         }
+    }
+
+    private static getIconString(iconBuffer: Buffer): string {
+        return `${ICON_PATH}${ICON_ENCODING},${iconBuffer.toString(ICON_ENCODING)}`;
     }
 }
 

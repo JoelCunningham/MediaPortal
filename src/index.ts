@@ -1,3 +1,5 @@
+import { APP_EXT } from '@objects/constants';
+import { FileRoute } from '@objects/enums';
 import '@routes/icon-routes';
 import '@routes/launch-routes';
 import '@routes/shortcut-routes';
@@ -34,15 +36,14 @@ const createWindow = (): void => {
 
 app.on('ready', createWindow);
 
-ipcMain.handle('open-file-dialog', async () => {
+ipcMain.handle(FileRoute.OPEN_DIALOG, async () => {
   const result = await dialog.showOpenDialog(mainWindow!, {
       properties: ['openFile'],
-      filters: [{ name: 'Executables', extensions: ['exe', 'app'] }],
+      filters: [{ name: 'Executables', extensions: APP_EXT }],
   });
 
   if (!result.canceled && result.filePaths.length > 0) {
       return result.filePaths[0];
   }
-
-  throw new Error('No file selected');
+  return null;
 });

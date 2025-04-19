@@ -18,3 +18,7 @@ export enum IconRoute {
 export enum LaunchRoute {
     RUN = 'run-launch',
 }
+
+export enum FileRoute {
+    OPEN_DIALOG = 'open-file-dialog',
+}
