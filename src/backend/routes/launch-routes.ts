@@ -6,7 +6,5 @@ import LaunchService from "@services/launch-service";
 new Route<LaunchRoute>(LaunchRoute.RUN, async (shortcut: ShortcutModel) => {
     if (shortcut.type === ShortcutType.APP) {
         LaunchService.launchApp(shortcut);
-    } else if (shortcut.type === ShortcutType.WEB) {
-        LaunchService.launchWeb(shortcut);
-    }
+    } 
 });

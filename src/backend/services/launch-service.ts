@@ -1,8 +1,6 @@
 import Shortcut from "@models/shortcut-model";
-import { completeUrl } from "@utilities/url-utilities";
 
 import { execFile } from "child_process";
-import { BrowserWindow } from "electron";
 
 class LaunchService {
 
@@ -11,19 +9,6 @@ class LaunchService {
             execFile(shortcut.location, (error: Error) => {
                 if (error) throw new Error(error.message);
             });
-        } catch (error) { }
-    }
-
-    public static launchWeb(shortcut: Shortcut): void {
-        try {
-            const win = new BrowserWindow({
-                fullscreen: true,
-                webPreferences: {
-                    nodeIntegration: false,
-                    contextIsolation: true,
-                }
-            });
-            win.loadURL(completeUrl(shortcut.location));
         } catch (error) { }
     }
 }
