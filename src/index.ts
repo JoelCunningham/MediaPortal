@@ -11,39 +11,41 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
-  app.quit();
+    app.quit();
 }
 
 let mainWindow: BrowserWindow | null = null;
 
 const createWindow = (): void => {
-  const isDev = process.env.NODE_ENV === 'development';
+    const isDev = process.env.NODE_ENV === 'development';
 
-  mainWindow = new BrowserWindow({
-    fullscreen: true,
-    webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      contextIsolation: true,
-      nodeIntegration: false,
-      webviewTag: true,
-    },
-  });
+    mainWindow = new BrowserWindow({
+        fullscreen: true,
+        webPreferences: {
+            preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+            contextIsolation: true,
+            nodeIntegration: false,
+            webviewTag: true,
+        },
+    });
 
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    console.log(MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY)
 
-  if (isDev) mainWindow.webContents.openDevTools();
+    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+    if (isDev) mainWindow.webContents.openDevTools();
 };
 
 app.on('ready', createWindow);
 
 ipcMain.handle(FileRoute.OPEN_DIALOG, async () => {
-  const result = await dialog.showOpenDialog(mainWindow!, {
-      properties: ['openFile'],
-      filters: [{ name: 'Executables', extensions: APP_EXT }],
-  });
+    const result = await dialog.showOpenDialog(mainWindow!, {
+        properties: ['openFile'],
+        filters: [{ name: 'Executables', extensions: APP_EXT }],
+    });
 
-  if (!result.canceled && result.filePaths.length > 0) {
-      return result.filePaths[0];
-  }
-  return null;
+    if (!result.canceled && result.filePaths.length > 0) {
+        return result.filePaths[0];
+    }
+    return null;
 });
