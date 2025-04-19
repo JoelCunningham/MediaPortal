@@ -1,18 +1,17 @@
+import Request from '@api/request';
 import { useNavigationContext } from '@contexts/navigation';
 import Shortcut from '@models/shortcut-model';
-import { ShortcutType } from '@objects/enums';
+import { LaunchRoute, ShortcutType } from '@objects/enums';
 import React from 'react';
 
 const ShortcutBox = ({ shortcut }: ShortcutBoxProps) => {
     const { addAndSetCurrentShortcut } = useNavigationContext();
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (shortcut.type === ShortcutType.WEB) {
             addAndSetCurrentShortcut(shortcut);
         } else {
-            window.Electron.ipcRenderer.invoke('launch-shortcut', shortcut).catch((error) => {
-                console.error('Error opening URL:', error);
-            });
+            await Request.send(LaunchRoute.RUN, shortcut);
         };
     }
 

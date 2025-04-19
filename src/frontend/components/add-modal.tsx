@@ -1,8 +1,7 @@
-import Request from '@api/request';
 import { CloseButton, FileInput, RadioInput, SubmitButton, TextInput } from '@components/inputs';
 import { useShortcutContext } from '@contexts/shortcut';
 import Shortcut from '@models/shortcut-model';
-import { IconRoute, ShortcutType } from '@objects/enums';
+import { ShortcutType } from '@objects/enums';
 import React, { useEffect } from 'react';
 
 const AddModal = ({ isOpen, onClose }: AddModalProps) => {
@@ -24,8 +23,8 @@ const AddModal = ({ isOpen, onClose }: AddModalProps) => {
         });
     }
 
-    const handleAddShortcut = () => {
-        addShortcut(newShortcut);
+    const handleAddShortcut =  async () => {
+        await addShortcut(newShortcut);
         handleClose();
     };
 
@@ -37,17 +36,16 @@ const AddModal = ({ isOpen, onClose }: AddModalProps) => {
 
     useEffect(() => {
         let isCancelled = false;
-        const fetchIcon = async () => {
+        const getInfo = async () => {
             newShortcut.guessName();
-            setNewShortcut(newShortcut.createInstance());
             if (newShortcut.location) {
-                const icon = await Request.send(IconRoute.GET, newShortcut.location, newShortcut.type);
-                if (!isCancelled) {
-                    setNewShortcut(newShortcut.update({ icon }));
-                }
+                await newShortcut.initialise();
+            }
+            if (!isCancelled) {
+                setNewShortcut(newShortcut.createInstance());
             }
         };
-        fetchIcon();
+        getInfo();
         return () => { isCancelled = true; };
     }, [newShortcut.location]);
 

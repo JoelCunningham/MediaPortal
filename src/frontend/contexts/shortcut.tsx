@@ -6,7 +6,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 interface ShortcutContextProps {
     shortcuts: ShortcutModel[];
     setShortcuts: React.Dispatch<React.SetStateAction<ShortcutModel[]>>;
-    addShortcut: (shortcut: ShortcutModel) => void;
+    addShortcut: (shortcut: ShortcutModel) => Promise<void>;
 }
 
 const ShortcutContext = createContext<ShortcutContextProps | undefined>(undefined);
