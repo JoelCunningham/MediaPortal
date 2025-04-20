@@ -1,4 +1,4 @@
-import { Endpoint, IpcMainProcessor } from "@objects/types";
+import { Endpoint, IpcMainProcessor } from "@collections/types";
 import { ipcMain, IpcMainInvokeEvent } from "electron";
 
 class Route<T extends Endpoint> {

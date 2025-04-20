@@ -1,4 +1,4 @@
-import { ICON_ENCODING, ICON_PATH, ICON_SIZE } from '@objects/constants';
+import { ICON_ENCODING, ICON_PATH, ICON_SIZE } from '@collections/constants';
 import { completeUrl, isValidUrl } from '@utilities/url-utilities';
 import extractIcon from 'extract-file-icon';
 

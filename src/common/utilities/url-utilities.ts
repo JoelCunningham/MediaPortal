@@ -1,4 +1,4 @@
-import { HTTP, HTTPS, URL_REGEX } from "@objects/constants";
+import { HTTP, HTTPS, URL_REGEX } from "@collections/constants";
 
 const isValidUrl = (url: string) => {
     return URL_REGEX.test(url);

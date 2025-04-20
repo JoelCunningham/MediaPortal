@@ -1,7 +1,7 @@
 import { NavigationProvider } from '@contexts/navigation';
 import { ShortcutProvider } from '@contexts/shortcut';
 import Navbar from '@layouts/navbar';
-import { HOME_DIR } from '@objects/constants';
+import { HOME_DIR } from '@collections/constants';
 import Home from '@pages/home';
 
 import React from 'react';

@@ -1,5 +1,5 @@
 import AbstractModel from '@models/abstract-model';
-import { DATA_DIR, FILE_ENCODING, JSON_SPACE } from '@objects/constants';
+import { DATA_DIR, FILE_ENCODING, JSON_SPACE } from '@collections/constants';
 import fs from 'fs';
 import path from 'path';
 

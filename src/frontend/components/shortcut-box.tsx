@@ -1,7 +1,7 @@
 import Request from '@api/request';
 import { useNavigationContext } from '@contexts/navigation';
 import Shortcut from '@models/shortcut-model';
-import { LaunchRoute, ShortcutType } from '@objects/enums';
+import { LaunchRoute, ShortcutType } from '@collections/enums';
 import React from 'react';
 
 const ShortcutBox = ({ shortcut }: ShortcutBoxProps) => {

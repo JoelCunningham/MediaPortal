@@ -1,5 +1,5 @@
-import { APP_EXT } from '@objects/constants';
-import { FileRoute } from '@objects/enums';
+import { APP_EXT } from '@collections/constants';
+import { FileRoute } from '@collections/enums';
 
 import '@routes/credential-routes';
 import '@routes/icon-routes';

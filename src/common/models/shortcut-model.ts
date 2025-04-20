@@ -1,6 +1,6 @@
 import Request from "@api/request";
 import AbstractModel from "@models/abstract-model";
-import { IconRoute, ShortcutType } from "@objects/enums";
+import { IconRoute, ShortcutType } from "@collections/enums";
 import { v4 as UUID } from 'uuid';
 
 class ShortcutModel extends AbstractModel {

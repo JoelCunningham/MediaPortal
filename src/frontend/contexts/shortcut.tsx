@@ -1,6 +1,6 @@
 import Request from '@api/request';
 import Shortcut from '@models/shortcut-model';
-import { ShortcutRoute } from '@objects/enums';
+import { ShortcutRoute } from '@collections/enums';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface ShortcutContextProps {

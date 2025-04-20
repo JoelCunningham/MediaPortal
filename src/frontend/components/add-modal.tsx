@@ -1,7 +1,7 @@
 import { CloseButton, FileInput, RadioInput, SubmitButton, TextInput } from '@components/inputs';
 import { useShortcutContext } from '@contexts/shortcut';
 import Shortcut from '@models/shortcut-model';
-import { FileRoute, ShortcutType } from '@objects/enums';
+import { FileRoute, ShortcutType } from '@collections/enums';
 import React, { useEffect } from 'react';
 
 const AddModal = ({ isOpen, onClose }: AddModalProps) => {
