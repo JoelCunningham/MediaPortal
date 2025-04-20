@@ -1,7 +1,7 @@
 import Request from '@api/request';
+import { LaunchRoute, ShortcutType } from '@collections/enums';
 import { useNavigationContext } from '@contexts/navigation';
 import Shortcut from '@models/shortcut-model';
-import { LaunchRoute, ShortcutType } from '@collections/enums';
 import React from 'react';
 
 const ShortcutBox = ({ shortcut }: ShortcutBoxProps) => {
@@ -14,6 +14,8 @@ const ShortcutBox = ({ shortcut }: ShortcutBoxProps) => {
             await Request.send(LaunchRoute.RUN, shortcut);
         };
     }
+
+    console.log(shortcut);
 
     return (
         <button

@@ -5,12 +5,12 @@ import { FileRoute, ShortcutType } from '@collections/enums';
 import React, { useEffect } from 'react';
 
 const AddModal = ({ isOpen, onClose }: AddModalProps) => {
-    const [newShortcut, setNewShortcut] = React.useState(Shortcut.createBlank());
+    const [newShortcut, setNewShortcut] = React.useState(new Shortcut().update({ type: ShortcutType.APP }));
     const [previousLocation, setPreviousLocation] = React.useState<string>('');
     const { addShortcut } = useShortcutContext();
 
     const handleClose = () => {
-        setNewShortcut(Shortcut.createBlank());
+        setNewShortcut(new Shortcut());
         setPreviousLocation('');
         onClose();
     };
@@ -40,7 +40,7 @@ const AddModal = ({ isOpen, onClose }: AddModalProps) => {
                 await newShortcut.initialise();
             }
             if (!isCancelled) {
-                setNewShortcut(newShortcut.createInstance());
+                setNewShortcut(newShortcut);
             }
         };
         getInfo();

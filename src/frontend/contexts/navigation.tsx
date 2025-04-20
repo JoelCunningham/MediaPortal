@@ -1,47 +1,45 @@
 import Shortcut from '@models/shortcut-model';
+import ShortcutInstance from '@models/shortcut-instance-model';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 interface NavigationContextProps {
-    currShortcut: Shortcut | null;
-    openShortcuts: Shortcut[];
-    addShortcut: (shortcut: Shortcut) => Shortcut;
-    removeShortcut: (instance: string) => void;
-    setCurrentShortcut: (shortcut: Shortcut | null, validate?: boolean) => void;
+    currShortcut: ShortcutInstance | null;
+    openShortcuts: ShortcutInstance[];
+    addShortcut: (shortcut: Shortcut) => ShortcutInstance;
+    removeShortcut: (id: string) => void;
+    setCurrentShortcut: (shortcut: ShortcutInstance | null) => void;
     addAndSetCurrentShortcut: (shortcut: Shortcut) => void;
 }
 
 const NavigationContext = createContext<NavigationContextProps | undefined>(undefined);
 
 export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [currShortcut, setCurrShortcut] = useState<Shortcut | null>(null);
-    const [prevShortcuts, setPrevShortcuts] = useState<Shortcut[]>([null]);
-    const [openShortcuts, setOpenShortcuts] = useState<Shortcut[]>([]);
+    const [currShortcut, setCurrShortcut] = useState<ShortcutInstance | null>(null);
+    const [prevShortcuts, setPrevShortcuts] = useState<ShortcutInstance[]>([null]);
+    const [openShortcuts, setOpenShortcuts] = useState<ShortcutInstance[]>([]);
 
-    const addShortcut = (shortcut: Shortcut): Shortcut => {
-        const newShortcut = shortcut.createInstance();
-        setOpenShortcuts((prev) => [...prev, newShortcut]);
-        return newShortcut;
+    const addShortcut = (shortcut: Shortcut): ShortcutInstance => {
+        const shortcutInstance = shortcut.createInstance();
+        setOpenShortcuts((prev) => [...prev, shortcutInstance]);
+        return shortcutInstance;
     };
 
-    const removeShortcut = (instance: string) => {
-        setOpenShortcuts((prev) => prev.filter((shortcut) => shortcut.instance !== instance));
-        setPrevShortcuts((prev) => prev.filter((shortcut) => shortcut.instance !== instance));
-        if (currShortcut?.instance === instance) {
+    const removeShortcut = (id: string) => {
+        setOpenShortcuts((prev) => prev.filter((shortcutInstance) => shortcutInstance.id !== id));
+        setPrevShortcuts((prev) => prev.filter((shortcutInstance) => shortcutInstance.id !== id));
+        if (currShortcut?.id === id) {
             setCurrShortcut(prevShortcuts[prevShortcuts.length - 1]);
         }
     };
 
-    const setCurrentShortcut = (shortcut: Shortcut | null, validate = true) => {
-        const isOpen = shortcut ? openShortcuts.some(s => s.instance === shortcut.instance) : false;
-        if (!validate || isOpen || shortcut === null) {
-            setPrevShortcuts((prev) => [...prev, currShortcut]);
-            setCurrShortcut(shortcut);
-        }
+    const setCurrentShortcut = (shortcutInstance: ShortcutInstance | null) => {
+        setPrevShortcuts((prev) => [...prev, currShortcut]);
+        setCurrShortcut(shortcutInstance);
     };
 
     const addAndSetCurrentShortcut = (shortcut: Shortcut) => {
-        const newShortcut = addShortcut(shortcut);
-        setCurrentShortcut(newShortcut, false);
+        const shortcutInstance = addShortcut(shortcut);
+        setCurrentShortcut(shortcutInstance);
     };
 
     return (

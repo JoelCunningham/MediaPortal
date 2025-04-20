@@ -18,7 +18,7 @@ const RadioInput = ({ checked, onCheck, label }: { checked: boolean; onCheck: ch
 const TextInput = ({ value, onChange, placeholder, className }: { value: string; onChange: changeEvent; placeholder: string; className?: string }) => (
     <input
         type='text'
-        value={value}
+        value={value ?? ''}
         onChange={onChange}
         placeholder={placeholder}
         className={`text-input focusable ${className}`}

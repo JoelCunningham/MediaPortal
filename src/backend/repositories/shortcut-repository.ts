@@ -13,9 +13,6 @@ class ShortcutRepository extends AbstractRepository<Shortcut> {
     }
 
     public addShortcuts(shortcuts: Shortcut[]): void {
-        shortcuts.map(shortcut => {
-            shortcut.instance = '';
-        });
         this.appendData(shortcuts);
     }
 

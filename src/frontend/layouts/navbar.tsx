@@ -19,11 +19,11 @@ const Navbar = () => {
                     <NavbarItem icon='home' onClick={() => setCurrentShortcut(null)} />
                     {openShortcuts.map((shortcut) => (
                         <NavbarItem
-                            key={shortcut.instance}
-                            icon={shortcut.icon}
+                            key={shortcut.id}
+                            icon={shortcut.base.icon}
                             isShortcut
                             onClick={() => setCurrentShortcut(shortcut)}
-                            onClose={() => removeShortcut(shortcut.instance)}
+                            onClose={() => removeShortcut(shortcut.id)}
                         />
                     ))}
                     <NavbarItem

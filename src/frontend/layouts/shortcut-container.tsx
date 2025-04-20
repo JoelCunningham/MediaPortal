@@ -7,7 +7,7 @@ const ShortcutContainer = () => {
     const isAppActive = !!currShortcut;
     const webviewRefs = useRef<Record<string, Electron.WebviewTag>>({});
 
-    const autofill = (instanceId: string, email: string, password: string) => {
+    const autofill = (instanceId: string, username: string, password: string) => {
         const webview = webviewRefs.current[instanceId];
         if (webview) {
             webview.executeJavaScript(`
@@ -24,10 +24,10 @@ const ShortcutContainer = () => {
                         element.dispatchEvent(event);
                     }
 
-                    const emailField = document.querySelector('input[type="email"], input[name*="email"], input[name*="username"]');
+                    const usernameField = document.querySelector('input[type="email"], input[name*="email"], input[name*="username"]');
                     const passwordField = document.querySelector('input[type="password"]');
 
-                    if (emailField) setNativeValue(emailField, ${JSON.stringify(email)});
+                    if (usernameField) setNativeValue(emailField, ${JSON.stringify(username)});
                     if (passwordField) setNativeValue(passwordField, ${JSON.stringify(password)});
                 })();
             `)
@@ -37,25 +37,25 @@ const ShortcutContainer = () => {
     return (
         <div className={`h-full ${!isAppActive && 'hidden'}`}>
             {openShortcuts.map((shortcut) => {
-                const isShown = currShortcut?.instance === shortcut.instance;
+                const isShown = currShortcut?.id === shortcut.id;
 
                 return (
                     <div
-                        key={shortcut.instance}
+                        key={shortcut.id}
                         className={`h-full ${!isShown && 'hidden'}`}
                     >
                         <webview
                             ref={(el) => {
-                                if (el) webviewRefs.current[shortcut.instance] = el as Electron.WebviewTag;
+                                if (el) webviewRefs.current[shortcut.id] = el as Electron.WebviewTag;
                             }}
-                            src={completeUrl(shortcut.location)}
+                            src={completeUrl(shortcut.base.location)}
                             preload='main_window/preload.js'
                             useragent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
                             style={{ width: '100%', height: '100%' }}
                         />
                         <button
                             onClick={() =>
-                                autofill(shortcut.instance, 'your@email.com', 'password123')
+                                autofill(shortcut.id, 'your@email.com', 'password123')
                             }
                         >
                             Autofill

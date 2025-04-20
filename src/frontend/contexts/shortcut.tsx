@@ -22,7 +22,10 @@ export const ShortcutProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     useEffect(() => {
         const fetchShortcuts = async () => {
             const response = await Request.send(ShortcutRoute.GET) as Shortcut[];
-            const shortcuts = response.map(Shortcut.createFrom);
+            const shortcuts = response.map((s) => {
+                const shortcut = Shortcut.create(s.name, s.location, s.type, s.position, s.icon);
+                return shortcut;
+            });
             for (const shortcut of shortcuts) {
                 await shortcut.initialise();
             }
