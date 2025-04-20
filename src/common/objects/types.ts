@@ -1,8 +1,8 @@
-import { IconRoute, LaunchRoute, ShortcutRoute } from "@objects/enums";
+import { CredentialRoute, IconRoute, LaunchRoute, ShortcutRoute } from "@objects/enums";
 
 export type IpcMainProcessor<T = any> = (...args: any[]) => Promise<T> | T;
 
-export type Endpoint = ShortcutRoute | IconRoute | LaunchRoute;
+export type Endpoint = ShortcutRoute | CredentialRoute | IconRoute | LaunchRoute;
 
 export type CacheKey = string;
 

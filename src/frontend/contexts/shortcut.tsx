@@ -1,28 +1,28 @@
 import Request from '@api/request';
-import ShortcutModel from '@models/shortcut-model';
+import Shortcut from '@models/shortcut-model';
 import { ShortcutRoute } from '@objects/enums';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface ShortcutContextProps {
-    shortcuts: ShortcutModel[];
-    setShortcuts: React.Dispatch<React.SetStateAction<ShortcutModel[]>>;
-    addShortcut: (shortcut: ShortcutModel) => Promise<void>;
+    shortcuts: Shortcut[];
+    setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>;
+    addShortcut: (shortcut: Shortcut) => Promise<void>;
 }
 
 const ShortcutContext = createContext<ShortcutContextProps | undefined>(undefined);
 
 export const ShortcutProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [shortcuts, setShortcuts] = useState<ShortcutModel[]>([]);
+    const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
 
-    const addShortcut = async (shortcut: ShortcutModel) => {
+    const addShortcut = async (shortcut: Shortcut) => {
         await Request.send(ShortcutRoute.ADD, shortcut);
         setShortcuts((prev) => [...prev, shortcut]);
     };
 
     useEffect(() => {
         const fetchShortcuts = async () => {
-            const response = await Request.send(ShortcutRoute.GET) as ShortcutModel[];
-            const shortcuts = response.map(ShortcutModel.createFrom);
+            const response = await Request.send(ShortcutRoute.GET) as Shortcut[];
+            const shortcuts = response.map(Shortcut.createFrom);
             for (const shortcut of shortcuts) {
                 await shortcut.initialise();
             }

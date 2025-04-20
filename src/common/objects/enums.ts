@@ -11,6 +11,12 @@ export enum ShortcutRoute {
     REMOVE = 'remove-shortcut'
 }
 
+export enum CredentialRoute {
+    GET = 'get-credentials',
+    ADD = 'add-credentials',
+    REMOVE = 'remove-credentials',
+}
+
 export enum IconRoute {
     GET = 'get-icon',
 }
