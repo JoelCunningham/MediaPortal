@@ -15,8 +15,6 @@ const ShortcutBox = ({ shortcut }: ShortcutBoxProps) => {
         };
     }
 
-    console.log(shortcut);
-
     return (
         <button
             className='p-4 rounded-lg w-40 items-center justify-center m-4 hover:bg-foreground clickable focusable transitioning'

@@ -27,7 +27,7 @@ const Navbar = () => {
                         />
                     ))}
                     <NavbarItem
-                        icon='add'
+                        icon='key'
                         onClick={() => {
                             window.Electron.ipcRenderer.invoke('fill-credentials', 'user@example.com', 'mypassword');
                         }}        

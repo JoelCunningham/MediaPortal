@@ -22,8 +22,6 @@ const Home = () => {
                 </div>
             </div>
 
-            <input type='email' id='email' placeholder='Email' className='w-1/2 h-10 p-2 rounded-lg bg-background text-white' />
-
             <AddModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
