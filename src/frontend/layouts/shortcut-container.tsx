@@ -1,3 +1,4 @@
+import { useCredentialContext } from '@contexts/credentials';
 import { useNavigationContext } from '@contexts/navigation';
 import ShortcutInstance from '@models/shortcut-instance-model';
 import AutoFillScript from '@scripts/auto-fill-script';
@@ -7,15 +8,16 @@ import React, { useEffect, useRef } from 'react';
 
 const ShortcutContainer = () => {
     const { openShortcuts, currShortcut } = useNavigationContext();
+    const { getCredentials } = useCredentialContext();
     const isAppActive = !!currShortcut;
     const webviewRefs = useRef<Record<string, Electron.WebviewTag>>({});
 
     const detectCredentials = (webview: Electron.WebviewTag, shortcut: ShortcutInstance) => {
         DetectCredentialsScript.execute(webview).then((detected: boolean) => {
             if (detected) {
-                console.log('Credentials detected, executing autofill script...');
                 const webview = webviewRefs.current[shortcut.id];
-                AutoFillScript.execute(webview, 'username', 'password');
+                const credentials = getCredentials(shortcut.base.location);
+                AutoFillScript.execute(webview, credentials)
             }
         });
     };

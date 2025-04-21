@@ -11,6 +11,14 @@ class CredentialModal extends AbstractModel {
         this.username = username;
         this.password = password;
     }
+
+    public static create = (credential: CredentialModal): CredentialModal => {
+        return new CredentialModal(credential.domain, credential.username, credential.password);
+    }
+
+    public isGeneric(): boolean {
+        return !this.domain;
+    }
 }
 
 export default CredentialModal;
