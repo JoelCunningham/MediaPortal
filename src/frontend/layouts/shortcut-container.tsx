@@ -1,5 +1,7 @@
 import { useNavigationContext } from '@contexts/navigation';
 import ShortcutInstance from '@models/shortcut-instance-model';
+import AutoFillScript from '@scripts/auto-fill-script';
+import DetectCredentialsScript from '@scripts/detect-credentials-script';
 import { completeUrl } from '@utilities/url-utilities';
 import React, { useEffect, useRef } from 'react';
 
@@ -8,62 +10,12 @@ const ShortcutContainer = () => {
     const isAppActive = !!currShortcut;
     const webviewRefs = useRef<Record<string, Electron.WebviewTag>>({});
 
-    const autofill = (instanceId: string, username: string, password: string) => {
-        const webview = webviewRefs.current[instanceId];
-        if (webview) {
-            webview.executeJavaScript(`
-                (() => {
-                    function setNativeValue(element, value) {
-                        const lastValue = element.value;
-                        element.value = value;
-                        const event = new Event('input', { bubbles: true });
-                        event.simulated = true;
-                        const tracker = element._valueTracker;
-                        if (tracker) {
-                            tracker.setValue(lastValue);
-                        }
-                        element.dispatchEvent(event);
-                    }
-
-                    function style(element) {
-                        element.style.border = '2px solid green';
-                        element.style.color = '#000';
-                        element.style.backgroundColor = '#e6ffe6';
-                    }
-
-                    const usernameField = document.querySelector('input[type="email"], input[name*="email"], input[name*="username"]');
-                    const passwordField = document.querySelector('input[type="password"]');
-                    const submitButton = document.querySelector('button[type="submit"], input[type="submit"]');
-
-                    if (usernameField) {
-                        setNativeValue(usernameField, ${JSON.stringify(username)});
-                        style(usernameField);
-                        usernameField.focus();
-                    }
-                    if (passwordField) {
-                        setNativeValue(passwordField, ${JSON.stringify(password)});
-                        style(passwordField);
-                        passwordField.focus();
-                    }
-
-                    if (submitButton && (usernameField || passwordField)) {
-                        submitButton.focus();
-                    }
-                })();
-            `)
-        }
-    };
-
     const detectCredentials = (webview: Electron.WebviewTag, shortcut: ShortcutInstance) => {
-        webview.executeJavaScript(`
-            (() => {
-              const hasUsername = document.querySelector('input[type="email"], input[name*="email"], input[name*="username"]');
-              const hasPassword = document.querySelector('input[type="password"]');
-              return !!(hasUsername || hasPassword);
-            })();
-        `).then((detected: boolean) => {
+        DetectCredentialsScript.execute(webview).then((detected: boolean) => {
             if (detected) {
-                autofill(shortcut.id, 'your@email.com', 'password123');
+                console.log('Credentials detected, executing autofill script...');
+                const webview = webviewRefs.current[shortcut.id];
+                AutoFillScript.execute(webview, 'username', 'password');
             }
         });
     };

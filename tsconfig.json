@@ -25,6 +25,7 @@
       "@contexts/*": ["src/frontend/contexts/*"],
       "@layouts/*": ["src/frontend/layouts/*"],
       "@pages/*": ["src/frontend/pages/*"],
+      "@scripts/*": ["src/frontend/scripts/*"],
     }
   },
   "include": ["src/**/*"]

@@ -31,6 +31,7 @@ export const rendererConfig: Configuration = {
       '@contexts': path.resolve(__dirname, 'src/frontend/contexts'),
       '@layouts': path.resolve(__dirname, 'src/frontend/layouts'),
       '@pages': path.resolve(__dirname, 'src/frontend/pages'),
+      '@scripts': path.resolve(__dirname, 'src/frontend/scripts'),
     }
   },
 };
