@@ -1,7 +1,7 @@
 import { HOME_DIR } from '@collections/constants';
-import { CredentialProvider } from '@contexts/credentials';
-import { NavigationProvider } from '@contexts/navigation';
-import { ShortcutProvider } from '@contexts/shortcut';
+import { CredentialProvider } from '@contexts/credential-context';
+import { NavigationProvider } from '@contexts/navigation-context';
+import { ShortcutProvider } from '@contexts/shortcut-context';
 import Navbar from '@layouts/navbar';
 import Home from '@pages/home';
 

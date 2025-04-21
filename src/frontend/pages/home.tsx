@@ -1,7 +1,7 @@
 import AddModal from '@components/add-modal';
 import { AddButton } from '@components/inputs';
 import ShortcutBox from '@components/shortcut-box';
-import { useShortcutContext } from '@contexts/shortcut';
+import { useShortcutContext } from '@contexts/shortcut-context';
 import React, { useState } from 'react';
 
 const Home = () => {

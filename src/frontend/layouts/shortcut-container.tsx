@@ -1,5 +1,5 @@
-import { useCredentialContext } from '@contexts/credentials';
-import { useNavigationContext } from '@contexts/navigation';
+import { useCredentialContext } from '@contexts/credential-context';
+import { useNavigationContext } from '@contexts/navigation-context';
 import ShortcutInstance from '@models/shortcut-instance-model';
 import AutoFillScript from '@scripts/auto-fill-script';
 import DetectCredentialsScript from '@scripts/detect-credentials-script';

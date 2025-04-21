@@ -1,6 +1,6 @@
 import Request from '@api/request';
 import { LaunchRoute, ShortcutType } from '@collections/enums';
-import { useNavigationContext } from '@contexts/navigation';
+import { useNavigationContext } from '@contexts/navigation-context';
 import Shortcut from '@models/shortcut-model';
 import React from 'react';
 
