@@ -13,19 +13,30 @@ const ShortcutContainer = () => {
     const webviewRefs = useRef<Record<string, Electron.WebviewTag>>({});
 
     const detectCredentials = (webview: Electron.WebviewTag, shortcut: ShortcutInstance) => {
-        DetectCredentialsScript.execute(webview).then((detected: boolean) => {
+        const found = DetectCredentialsScript.execute(webview).then((detected: boolean) => {
             if (detected) {
                 const webview = webviewRefs.current[shortcut.id];
                 const credentials = getCredentials(shortcut.base.location);
                 AutoFillScript.execute(webview, credentials)
             }
+            return detected;
         });
+        return found
     };
+
+    const safeDetectCredentials = (webview: Electron.WebviewTag, shortcut: ShortcutInstance) => {
+        const found = detectCredentials(webview, shortcut);
+        if (!found) {
+            setTimeout(() => {
+                detectCredentials(webview, shortcut);
+            }, 500);
+        }
+    }
 
     useEffect(() => {
         const webview = currShortcut ? webviewRefs.current[currShortcut.id] : null;
         if (webview) {
-            const detect = () => detectCredentials(webview, currShortcut);
+            const detect = () => safeDetectCredentials(webview, currShortcut);
             webview.addEventListener('did-navigate', detect);
             webview.addEventListener('dom-ready', detect);
 

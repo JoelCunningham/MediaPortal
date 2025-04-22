@@ -5,14 +5,17 @@ import { WebviewTag } from "electron";
 class AutoFillScript extends AbstractScript {
 
     public async execute(webview: WebviewTag, credentials: Credential[]): Promise<void> {
-        const credentialsJson = JSON.stringify(credentials).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+        const credentialsString = this.objectToString(credentials);
+        const dropdownArrowString = `url("data:image/svg+xml,%3Csvg fill=\\'black\\' height=\\'30\\' viewBox=\\'0 0 24 24\\' width=\\'30\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cpath d=\\'M7 10l5 5 5-5z\\'/%3E%3C/svg%3E")`;
         return this.run(webview, {
-            '__CREDENTIALS__': credentialsJson,
+            '__CREDENTIALS__': credentialsString,
+            '__DROPDOWN_ARROW__': dropdownArrowString,
         });
     }
 
     protected script = function () {
         const credentials: Credential[] = JSON.parse("__CREDENTIALS__");
+        const dropdownArrow: string = '__DROPDOWN_ARROW__';
 
         const usernameField = document.querySelector('input[type="email"], input[name*="email"], input[name*="username"]') as HTMLInputElement;
         const passwordField = document.querySelector('input[type="password"]') as HTMLInputElement;
@@ -30,8 +33,7 @@ class AutoFillScript extends AbstractScript {
         }
 
         function style(element: HTMLElement) {
-            element.style.border = '2px solid green';
-            element.style.color = '#000';
+            element.style.color = '#000000';
             element.style.backgroundColor = '#e6ffe6';
         }
 
@@ -70,7 +72,6 @@ class AutoFillScript extends AbstractScript {
             dropdown.style.color = 'transparent';
             dropdown.style.cursor = 'pointer';
             dropdown.style.appearance = 'none';
-            dropdown.style.backgroundImage = 'url("data:image/svg+xml;charset=UTF-8,%3Csvg fill=\'%500000\' height=\'30\' viewBox=\'0 0 24 24\' width=\'30\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M7 10l5 5 5-5z\'/%3E%3C/svg%3E")';
             dropdown.style.backgroundRepeat = 'no-repeat';
             dropdown.style.backgroundPosition = 'center';
             dropdown.style.outline = 'none';
@@ -106,6 +107,7 @@ class AutoFillScript extends AbstractScript {
             parent.appendChild(dropdown);
 
             const anchorRight = anchor.offsetLeft + anchor.offsetWidth;
+            dropdown.style.backgroundImage = dropdownArrow;
             dropdown.style.top = `${anchor.offsetTop}px`;
             dropdown.style.left = `${anchorRight - dropdown.offsetWidth}px`;
             dropdown.style.height = `${anchor.offsetHeight - 4}px`;

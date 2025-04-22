@@ -26,12 +26,6 @@ const Navbar = () => {
                             onClose={() => removeShortcut(shortcut.id)}
                         />
                     ))}
-                    <NavbarItem
-                        icon='key'
-                        onClick={() => {
-                            window.Electron.ipcRenderer.invoke('fill-credentials', 'user@example.com', 'mypassword');
-                        }}        
-                    />
                 </ul>
             </nav>
         </div>

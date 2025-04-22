@@ -32,8 +32,6 @@ const createWindow = (): void => {
         },
     });
 
-    console.log(MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY)
-
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     if (isDev) mainWindow.webContents.openDevTools();
