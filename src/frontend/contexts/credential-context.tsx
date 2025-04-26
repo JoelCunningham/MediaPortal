@@ -6,8 +6,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 interface CredentialContextProps {
     credentials: Credential[];
     getCredentials: (domain: string) => Credential[];
-    setCredentials: React.Dispatch<React.SetStateAction<Credential[]>>;
-    addCredential: (credential: Credential) => Promise<void>;
+    getDefaultCredentials: () => Credential[];
 }
 
 const CredentialContext = createContext<CredentialContextProps | undefined>(undefined);
@@ -16,19 +15,12 @@ export const CredentialProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const [credentials, setCredentials] = useState<Credential[]>([]);
 
     const getCredentials = (domain: string) => {
-        const specificCredentials = credentials.filter((credential) => credential.domain === domain);
-        if (specificCredentials.length > 0) {
-            return specificCredentials;
-        } else {
-            const genericCredentials = credentials.filter((credential) => credential.isGeneric());
-            return genericCredentials;
-        }
+        return credentials.filter((credential) => credential.domain === domain);
     }
 
-    const addCredential = async (credential: Credential) => {
-        await Request.send(CredentialRoute.ADD, credential);
-        setCredentials((prev) => [...prev, credential]);
-    };
+    const getDefaultCredentials = () => {
+        return credentials.filter((credential) => credential.isGeneric());
+    }
 
     useEffect(() => {
         const fetchCredentials = async () => {
@@ -43,7 +35,7 @@ export const CredentialProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }, []);
 
     return (
-        <CredentialContext.Provider value={{ credentials, getCredentials, setCredentials, addCredential }}>
+        <CredentialContext.Provider value={{ credentials, getCredentials, getDefaultCredentials }}>
             {children}
         </CredentialContext.Provider>
     );

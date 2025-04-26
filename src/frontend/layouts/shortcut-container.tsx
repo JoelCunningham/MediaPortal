@@ -8,7 +8,7 @@ import React, { useEffect, useRef } from 'react';
 
 const ShortcutContainer = () => {
     const { openShortcuts, currShortcut } = useNavigationContext();
-    const { getCredentials } = useCredentialContext();
+    const { getCredentials, getDefaultCredentials } = useCredentialContext();
     const isAppActive = !!currShortcut;
     const webviewRefs = useRef<Record<string, Electron.WebviewTag>>({});
 
@@ -16,12 +16,18 @@ const ShortcutContainer = () => {
         const found = DetectCredentialsScript.execute(webview).then((detected: boolean) => {
             if (detected) {
                 const webview = webviewRefs.current[shortcut.id];
-                const credentials = getCredentials(shortcut.base.location);
-                AutoFillScript.execute(webview, credentials)
+                var credentials = getCredentials(shortcut.base.location);
+                if (credentials.length > 0) {
+                    AutoFillScript.execute(webview, credentials, true, shortcut.base.icon);
+                }
+                else {
+                    credentials = getDefaultCredentials();
+                    AutoFillScript.execute(webview, credentials, false);
+                }
             }
             return detected;
         });
-        return found
+        return found;
     };
 
     const safeDetectCredentials = (webview: Electron.WebviewTag, shortcut: ShortcutInstance) => {
