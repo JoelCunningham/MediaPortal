@@ -1,7 +1,7 @@
-import Route from "@api/route";
-import Credential from "@models/credential-model";
-import { CredentialRoute } from "@collections/enums";
-import CredentialRepository from "@repositories/credential-repository";
+import Route from '@api/route';
+import Credential from '@models/credential-model';
+import { CredentialRoute } from '@collections/enums';
+import CredentialRepository from '@repositories/credential-repository';
 
 new Route<CredentialRoute>(CredentialRoute.GET, async () => {
     return CredentialRepository.getCredentials();

@@ -1,5 +1,5 @@
-import { CacheKey } from "@collections/types";
-import { IpcMainProcessor } from "@collections/types";
+import { CacheKey } from '@collections/types';
+import { IpcMainProcessor } from '@collections/types';
 
 class RouteCache {
   private cache = new Map<CacheKey, any>();

@@ -1,4 +1,4 @@
-import AbstractModel from "@models/abstract-model";
+import AbstractModel from '@models/abstract-model';
 
 class CredentialModal extends AbstractModel {
     public domain: string;

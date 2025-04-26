@@ -1,5 +1,5 @@
-import AbstractScript from "@scripts/abstract-script";
-import { WebviewTag } from "electron";
+import AbstractScript from '@scripts/abstract-script';
+import { WebviewTag } from 'electron';
 
 class DetectCredentialsScript extends AbstractScript {
 

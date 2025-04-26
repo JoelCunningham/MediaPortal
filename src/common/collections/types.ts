@@ -1,4 +1,4 @@
-import { CredentialRoute, IconRoute, LaunchRoute, ShortcutRoute } from "@collections/enums";
+import { CredentialRoute, IconRoute, LaunchRoute, ShortcutRoute } from '@collections/enums';
 
 export type IpcMainProcessor<T = any> = (...args: any[]) => Promise<T> | T;
 

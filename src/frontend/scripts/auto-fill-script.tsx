@@ -1,6 +1,6 @@
-import Credential from "@models/credential-model";
-import AbstractScript from "@scripts/abstract-script";
-import { WebviewTag } from "electron";
+import Credential from '@models/credential-model';
+import AbstractScript from '@scripts/abstract-script';
+import { WebviewTag } from 'electron';
 
 class AutoFillScript extends AbstractScript {
     public async execute(webview: WebviewTag, credentials: Credential[], isSpecific: boolean, icon: string = ''): Promise<void> {
@@ -12,9 +12,9 @@ class AutoFillScript extends AbstractScript {
     }
 
     protected script = function () {
-        const icon: string = JSON.parse("__ICON__");
-        const isSpecific: boolean = JSON.parse("__IS_SPECIFIC__");
-        const credentials: Credential[] = JSON.parse("__CREDENTIALS__");
+        const icon: string = JSON.parse('__ICON__');
+        const isSpecific: boolean = JSON.parse('__IS_SPECIFIC__');
+        const credentials: Credential[] = JSON.parse('__CREDENTIALS__');
 
         const usernameField = document.querySelector<HTMLInputElement>('input[type="email"], input[name*="email"], input[name*="username"]');
         const passwordField = document.querySelector<HTMLInputElement>('input[type="password"]');
@@ -81,14 +81,14 @@ class AutoFillScript extends AbstractScript {
 
                 item.tabIndex = 0;
                 item.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style='display: flex; align-items: center; gap: 8px;'>
                         ${isSpecific
-                        ? `<img style="width: 24px; height: 24px; border-radius: 50%;" src="${icon}" />`
-                        : `<div style="font-size: 24px;">🔑</div>`
+                        ? `<img style='width: 24px; height: 24px; border-radius: 50%;' src='${icon}' />`
+                        : `<div style='font-size: 24px;'>🔑</div>`
                     }
                         <div>
-                            <div style="font-weight: 500;">${credential.username}</div>
-                            <div style="font-size: 12px; color: #666;">${isSpecific ? 'Saved credential' : 'Default email'}</div>
+                            <div style='font-weight: 500;'>${credential.username}</div>
+                            <div style='font-size: 12px; color: #666;'>${isSpecific ? 'Saved credential' : 'Default email'}</div>
                         </div>
                     </div>
                 `;

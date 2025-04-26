@@ -1,4 +1,4 @@
-import { WebviewTag } from "electron";
+import { WebviewTag } from 'electron';
 
 abstract class AbstractScript {
 

@@ -1,7 +1,7 @@
-import Route from "@api/route";
-import Shortcut from "@models/shortcut-model";
-import { ShortcutRoute } from "@collections/enums";
-import ShortcutRepository from "@repositories/shortcut-repository";
+import Route from '@api/route';
+import Shortcut from '@models/shortcut-model';
+import { ShortcutRoute } from '@collections/enums';
+import ShortcutRepository from '@repositories/shortcut-repository';
 
 new Route<ShortcutRoute>(ShortcutRoute.GET, async () => {
     return ShortcutRepository.getShortcuts();

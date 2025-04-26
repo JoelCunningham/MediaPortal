@@ -1,7 +1,7 @@
-import Request from "@api/request";
-import { IconRoute, ShortcutType } from "@collections/enums";
-import AbstractModel from "@models/abstract-model";
-import ShortcutInstance from "@models/shortcut-instance-model";
+import Request from '@api/request';
+import { IconRoute, ShortcutType } from '@collections/enums';
+import AbstractModel from '@models/abstract-model';
+import ShortcutInstance from '@models/shortcut-instance-model';
 
 class ShortcutModel extends AbstractModel {
     public name: string;

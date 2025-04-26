@@ -1,6 +1,6 @@
-import Route from "@api/route";
-import { IconRoute, ShortcutType } from "@collections/enums";
-import IconService from "@services/icon-service";
+import Route from '@api/route';
+import { IconRoute, ShortcutType } from '@collections/enums';
+import IconService from '@services/icon-service';
 
 new Route<IconRoute>(IconRoute.GET, async (location: string, type: ShortcutType) => {
     let icon = '';

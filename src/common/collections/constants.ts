@@ -1,4 +1,4 @@
-import { IconSize, JsonSpace } from "@collections/types";
+import { IconSize, JsonSpace } from '@collections/types';
 
 export const HOME_DIR: string = '/main_window';
 export const DATA_DIR: string = 'src/backend/data/';

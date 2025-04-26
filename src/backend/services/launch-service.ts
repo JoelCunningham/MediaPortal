@@ -1,6 +1,6 @@
-import Shortcut from "@models/shortcut-model";
+import Shortcut from '@models/shortcut-model';
 
-import { execFile } from "child_process";
+import { execFile } from 'child_process';
 
 class LaunchService {
 
