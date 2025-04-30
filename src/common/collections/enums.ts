@@ -19,6 +19,7 @@ export enum CredentialRoute {
 
 export enum IconRoute {
     GET = 'get-icon',
+    COLOUR = 'get-colour',
 }
 
 export enum LaunchRoute {

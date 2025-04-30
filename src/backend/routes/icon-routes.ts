@@ -11,3 +11,9 @@ new Route<IconRoute>(IconRoute.GET, async (location: string, type: ShortcutType)
     }
     return icon;
 });
+
+new Route<IconRoute>(IconRoute.COLOUR, async (icon: string) => {
+    const iconBuffer = Buffer.from(icon);
+    const colour = await IconService.getColourFromIcon(iconBuffer);
+    return colour;
+});

@@ -7,27 +7,25 @@ import { completeUrl } from '@utilities/url-utilities';
 import React, { useEffect, useRef } from 'react';
 
 const ShortcutContainer = () => {
-    const { openShortcuts, currShortcut } = useNavigationContext();
+    const { openShortcuts, currShortcut, setIsLoading } = useNavigationContext();
     const { getCredentials, getDefaultCredentials } = useCredentialContext();
     const isAppActive = !!currShortcut;
     const webviewRefs = useRef<Record<string, Electron.WebviewTag>>({});
 
     const detectCredentials = (webview: Electron.WebviewTag, shortcut: ShortcutInstance) => {
-        const found = DetectCredentialsScript.execute(webview).then((detected: boolean) => {
+        return DetectCredentialsScript.execute(webview).then((detected: boolean) => {
             if (detected) {
                 const webview = webviewRefs.current[shortcut.id];
-                var credentials = getCredentials(shortcut.base.location);
+                let credentials = getCredentials(shortcut.base.location);
                 if (credentials.length > 0) {
                     AutoFillScript.execute(webview, credentials, true, shortcut.base.icon);
-                }
-                else {
+                } else {
                     credentials = getDefaultCredentials();
                     AutoFillScript.execute(webview, credentials, false);
                 }
             }
             return detected;
         });
-        return found;
     };
 
     const safeDetectCredentials = (webview: Electron.WebviewTag, shortcut: ShortcutInstance) => {
@@ -37,18 +35,25 @@ const ShortcutContainer = () => {
                 detectCredentials(webview, shortcut);
             }, 500);
         }
-    }
+    };
 
     useEffect(() => {
         const webview = currShortcut ? webviewRefs.current[currShortcut.id] : null;
-        if (webview) {
+        if (webview && currShortcut) {
             const detect = () => safeDetectCredentials(webview, currShortcut);
+            const handleStartLoading = () => setIsLoading(currShortcut.id, true);
+            const handleStopLoading = () => setIsLoading(currShortcut.id, false);
+
             webview.addEventListener('did-navigate', detect);
             webview.addEventListener('dom-ready', detect);
+            webview.addEventListener('did-start-loading', handleStartLoading);
+            webview.addEventListener('did-stop-loading', handleStopLoading);
 
             return () => {
                 webview.removeEventListener('did-navigate', detect);
                 webview.removeEventListener('dom-ready', detect);
+                webview.removeEventListener('did-start-loading', handleStartLoading);
+                webview.removeEventListener('did-stop-loading', handleStopLoading);
             };
         }
     }, [currShortcut]);
@@ -57,12 +62,15 @@ const ShortcutContainer = () => {
         <div className={`h-full ${!isAppActive && 'hidden'}`}>
             {openShortcuts.map((shortcut) => {
                 const isShown = currShortcut?.id === shortcut.id;
+                const isLoading = shortcut.isLoading;
 
                 return (
-                    <div
-                        key={shortcut.id}
-                        className={`h-full ${!isShown && 'hidden'}`}
-                    >
+                    <div key={shortcut.id} className={`relative h-full ${!isShown && 'hidden'}`}>
+                        {isLoading && (
+                            <div className="absolute inset-0 z-10 flex items-center justify-center" style={{ backgroundColor: shortcut.base.colour }}>
+                                <div className="w-24 h-24 border-8 border-primary border-t-transparent rounded-full animate-spin" />
+                            </div>
+                        )}
                         <webview
                             ref={(el) => {
                                 if (el) webviewRefs.current[shortcut.id] = el as Electron.WebviewTag;

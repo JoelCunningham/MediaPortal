@@ -14,8 +14,8 @@ const Navbar = () => {
                 {noActiveShortcut && <Outlet />}
                 <ShortcutContainer />
             </div>
-            <nav className='w-full'>
-                <ul className='flex items-center'>
+            <nav className='w-full bg-navbar'>
+                <ul className='flex items-center mt-1 mb-4'>
                     <NavbarItem icon='home' onClick={() => setCurrentShortcut(null)} />
                     {openShortcuts.map((shortcut) => (
                         <NavbarItem

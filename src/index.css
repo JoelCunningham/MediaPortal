@@ -2,6 +2,7 @@
 
 :root {
     --background: #030712;
+    --navbar: #13151c;
     --foreground: #364153;
     --primary: #C10007;
     --secondary: #9F0712;
@@ -12,6 +13,7 @@
     --color-foreground: var(--foreground);
     --color-primary: var(--primary);
     --color-secondary: var(--secondary); 
+    --color-navbar: var(--navbar);
 }
 
 /******************************************************************************/

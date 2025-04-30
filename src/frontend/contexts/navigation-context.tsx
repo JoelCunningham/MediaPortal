@@ -9,6 +9,7 @@ interface NavigationContextProps {
     removeShortcut: (id: string) => void;
     setCurrentShortcut: (shortcut: ShortcutInstance | null) => void;
     addAndSetCurrentShortcut: (shortcut: Shortcut) => void;
+    setIsLoading: (id: string, isLoading: boolean) => void;
 }
 
 const NavigationContext = createContext<NavigationContextProps | undefined>(undefined);
@@ -42,8 +43,19 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         setCurrentShortcut(shortcutInstance);
     };
 
+    const setIsLoading = (id: string, isLoading: boolean) => {
+        setOpenShortcuts((prev) =>
+            prev.map((shortcutInstance) => {
+                if (shortcutInstance.id === id) {
+                    shortcutInstance.isLoading = isLoading;
+                }
+                return shortcutInstance;
+            })
+        );
+    };
+
     return (
-        <NavigationContext.Provider value={{ openShortcuts, currShortcut, addShortcut, removeShortcut, setCurrentShortcut, addAndSetCurrentShortcut }}>
+        <NavigationContext.Provider value={{ openShortcuts, currShortcut, addShortcut, removeShortcut, setCurrentShortcut, addAndSetCurrentShortcut, setIsLoading }}>
             {children}
         </NavigationContext.Provider>
     );

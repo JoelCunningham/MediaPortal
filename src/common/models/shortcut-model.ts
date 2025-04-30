@@ -9,6 +9,7 @@ class ShortcutModel extends AbstractModel {
     public type: ShortcutType;
     public position: number;
     public icon: string;
+    public colour: string;
 
     public createInstance(): ShortcutInstance {
         return new ShortcutInstance(this);
@@ -37,6 +38,7 @@ class ShortcutModel extends AbstractModel {
 
     public async initialise(): Promise<void> {
         this.icon = await Request.send(IconRoute.GET, this.location, this.type);
+        this.colour = await Request.send(IconRoute.COLOUR, this.icon);
     }
 
 }
