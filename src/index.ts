@@ -1,5 +1,6 @@
 import { APP_EXT } from '@collections/constants';
 import { FileRoute } from '@collections/enums';
+import squirrelStartup from 'electron-squirrel-startup';
 
 import '@routes/credential-routes';
 import '@routes/icon-routes';
@@ -13,7 +14,7 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
+if (squirrelStartup) {
     app.quit();
 }
 
@@ -41,7 +42,11 @@ const createWindow = (): void => {
 app.on('ready', createWindow);
 
 ipcMain.handle(FileRoute.OPEN_DIALOG, async () => {
-    const result = await dialog.showOpenDialog(mainWindow!, {
+    if (!mainWindow) {
+        return null;
+    }
+
+    const result = await dialog.showOpenDialog(mainWindow, {
         properties: ['openFile'],
         filters: [{ name: 'Executables', extensions: APP_EXT }],
     });

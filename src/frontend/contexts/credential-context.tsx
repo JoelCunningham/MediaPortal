@@ -1,7 +1,7 @@
 import Request from '@api/request';
 import { CredentialRoute } from '@collections/enums';
 import Credential from '@models/credential-model';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, type FC, type ReactNode } from 'react';
 
 interface CredentialContextProps {
     credentials: Credential[];
@@ -11,7 +11,7 @@ interface CredentialContextProps {
 
 const CredentialContext = createContext<CredentialContextProps | undefined>(undefined);
 
-export const CredentialProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CredentialProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [credentials, setCredentials] = useState<Credential[]>([]);
 
     const getCredentials = (domain: string) => {
