@@ -31,7 +31,7 @@ const FileInput = ({ value, onChange, placeholder, onClick }: { value: string; o
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className='!pr-10'
+            className='pr-10!'
         />
         <button className='file-input focusable clickable' onClick={onClick} type='button' >
             <Icon icon='folder' size={20} />

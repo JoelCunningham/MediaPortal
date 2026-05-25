@@ -15,7 +15,7 @@ const NavigationContext = createContext<NavigationContextProps | undefined>(unde
 
 export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [currShortcut, setCurrShortcut] = useState<ShortcutInstance | null>(null);
-    const [prevShortcuts, setPrevShortcuts] = useState<ShortcutInstance[]>([null]);
+    const [prevShortcuts, setPrevShortcuts] = useState<(ShortcutInstance | null)[]>([]);
     const [openShortcuts, setOpenShortcuts] = useState<ShortcutInstance[]>([]);
 
     const addShortcut = (shortcut: Shortcut): ShortcutInstance => {
@@ -26,9 +26,13 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
 
     const removeShortcut = (id: string) => {
         setOpenShortcuts((prev) => prev.filter((shortcutInstance) => shortcutInstance.id !== id));
-        setPrevShortcuts((prev) => prev.filter((shortcutInstance) => shortcutInstance.id !== id));
+        setPrevShortcuts((prev) => prev.filter((shortcutInstance) => shortcutInstance?.id !== id));
         if (currShortcut?.id === id) {
-            setCurrShortcut(prevShortcuts[prevShortcuts.length - 1]);
+            const previousShortcut = prevShortcuts
+                .slice()
+                .reverse()
+                .find((shortcutInstance): shortcutInstance is ShortcutInstance => shortcutInstance !== null && shortcutInstance.id !== id) ?? null;
+            setCurrShortcut(previousShortcut);
         }
     };
 

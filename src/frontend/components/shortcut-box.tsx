@@ -12,7 +12,7 @@ const ShortcutBox = ({ shortcut }: ShortcutBoxProps) => {
             addAndSetCurrentShortcut(shortcut);
         } else {
             await Request.send(LaunchRoute.RUN, shortcut);
-        };
+        }
     }
 
     return (

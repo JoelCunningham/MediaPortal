@@ -11,12 +11,13 @@ const ShortcutContainer = () => {
     const { getCredentials, getDefaultCredentials } = useCredentialContext();
     const isAppActive = !!currShortcut;
     const webviewRefs = useRef<Record<string, Electron.WebviewTag>>({});
+    const webviewPartition = 'persist:media-portal';
 
     const detectCredentials = (webview: Electron.WebviewTag, shortcut: ShortcutInstance) => {
         const found = DetectCredentialsScript.execute(webview).then((detected: boolean) => {
             if (detected) {
                 const webview = webviewRefs.current[shortcut.id];
-                var credentials = getCredentials(shortcut.base.location);
+                let credentials = getCredentials(shortcut.base.location);
                 if (credentials.length > 0) {
                     AutoFillScript.execute(webview, credentials, true, shortcut.base.icon);
                 }
@@ -41,7 +42,7 @@ const ShortcutContainer = () => {
 
     useEffect(() => {
         const webview = currShortcut ? webviewRefs.current[currShortcut.id] : null;
-        if (webview) {
+        if (webview && currShortcut) {
             const detect = () => safeDetectCredentials(webview, currShortcut);
             webview.addEventListener('did-navigate', detect);
             webview.addEventListener('dom-ready', detect);
@@ -59,14 +60,12 @@ const ShortcutContainer = () => {
                 const isShown = currShortcut?.id === shortcut.id;
 
                 return (
-                    <div
-                        key={shortcut.id}
-                        className={`h-full ${!isShown && 'hidden'}`}
-                    >
+                    <div key={shortcut.id} className={`h-full ${!isShown && 'hidden'}`}>
                         <webview
                             ref={(el) => {
                                 if (el) webviewRefs.current[shortcut.id] = el as Electron.WebviewTag;
                             }}
+                            partition={webviewPartition}
                             src={completeUrl(shortcut.base.location)}
                             preload='main_window/preload.js'
                             useragent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'

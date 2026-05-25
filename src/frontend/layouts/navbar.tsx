@@ -41,7 +41,7 @@ const NavbarItem = ({ icon, onClick, onClose, isShortcut }: NavbarItemProps) => 
             timeoutRef.current = setTimeout(() => {
                 setIsCloseShown(true);
                 timeoutRef.current = null;
-            }, 700);
+            }, 0);
         }
     }
 
@@ -67,10 +67,10 @@ const NavbarItem = ({ icon, onClick, onClose, isShortcut }: NavbarItemProps) => 
     return (
         <li
             className='group text-white items-center justify-between rounded-md mt-auto'
-            onMouseEnter={isShortcut && handleShow}
-            onFocus={isShortcut && handleShow}
-            onMouseLeave={isShortcut && handleHide}
-            onBlur={isShortcut && handleHideOnBlur}
+            onMouseEnter={isShortcut ? handleShow : undefined}
+            onFocus={isShortcut ? handleShow : undefined}
+            onMouseLeave={isShortcut ? handleHide : undefined}
+            onBlur={isShortcut ? handleHideOnBlur : undefined}
             onClick={handleClick}
         >
 

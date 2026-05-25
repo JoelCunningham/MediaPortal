@@ -5,9 +5,11 @@
         "jscoverage",
         "jspm",
         "nuxt",
+        "opsz",
         "relocator",
         "Vite",
         "vuepress",
+        "wght",
         "wscript"
     ]
 }
