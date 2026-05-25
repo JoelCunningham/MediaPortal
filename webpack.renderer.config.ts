@@ -1,8 +1,8 @@
 import path from 'path';
-import type { Configuration } from 'webpack';
+import type { Configuration, RuleSetRule } from 'webpack';
 import { plugins } from './webpack.plugins';
 
-const rendererRules: Required<Configuration['module']>['rules'] = [
+const rendererRules: RuleSetRule[] = [
   {
     test: /\.css$/,
     use: [
