@@ -12,7 +12,7 @@ class IconService {
         } catch (error) {
             return null;
         }
-    };
+    }
 
     public static async getWebIcon(urlPath: string): Promise<string | null> {
         try {

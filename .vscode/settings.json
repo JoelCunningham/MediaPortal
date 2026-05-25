@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
+        "Asar",
         "dotenv",
         "jscoverage",
         "jspm",
         "nuxt",
+        "relocator",
         "Vite",
         "vuepress",
         "wscript"

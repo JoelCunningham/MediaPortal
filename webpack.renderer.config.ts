@@ -1,20 +1,31 @@
 import path from 'path';
 import type { Configuration } from 'webpack';
 import { plugins } from './webpack.plugins';
-import { rules } from './webpack.rules';
 
-rules.push({
-  test: /\.css$/,
-  use: [
-    { loader: 'style-loader' },
-    { loader: 'css-loader' },
-    { loader: 'postcss-loader' }
-  ],
-});
+const rendererRules: Required<Configuration['module']>['rules'] = [
+  {
+    test: /\.css$/,
+    use: [
+      { loader: 'style-loader' },
+      { loader: 'css-loader' },
+      { loader: 'postcss-loader' },
+    ],
+  },
+  {
+    test: /\.tsx?$/,
+    exclude: /(node_modules|\.webpack)/,
+    use: {
+      loader: 'ts-loader',
+      options: {
+        transpileOnly: true,
+      },
+    },
+  },
+];
 
 export const rendererConfig: Configuration = {
   module: {
-    rules,
+    rules: rendererRules,
   },
   plugins,
   resolve: {
